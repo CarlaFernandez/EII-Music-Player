@@ -1,0 +1,41 @@
+<resources>
+
+    <style name="AppCompatTheme" parent="Theme.AppCompat.Light">
+        <item name="android:colorPrimary">@color/primaryColor</item>
+        <item name="android:colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="android:colorAccent">@color/primaryLightColor</item>
+        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    </style>
+
+    <style name="AppCompatTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppCompatTheme.AppBarOverlay" parent="AppCompatTheme">
+        <item name="android:background">@color/primaryColor</item>
+    </style>
+
+    <style name="AppCompatTheme.PopupOverlay" parent="AppCompatTheme">
+        <item name="android:background">@drawable/menu_background</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AppCompatTheme.SearchView" parent="AppCompatTheme">
+        <item name="android:textColor">@color/primaryTextColor</item>
+        <item name="android:maxWidth">1000dp</item>
+        <item name="android:textColorHint">@color/hintTextColor</item>
+    </style>
+
+    <style name="FullscreenTheme" parent="AppCompatTheme">
+        <item name="android:actionBarStyle">@style/FullscreenActionBarStyle</item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowBackground">@null</item>
+        <item name="metaButtonBarStyle">?android:attr/buttonBarStyle</item>
+        <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
+    </style>
+
+    <style name="FullscreenActionBarStyle" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/black_overlay</item>
+    </style>
+</resources>

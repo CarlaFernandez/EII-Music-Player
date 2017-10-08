@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">EII Music Player</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="tabArtists">Artists</string>
+    <string name="tabAlbums">Albums</string>
+    <string name="tabPlaylists">Playlists</string>
+    <string name="searchHint">Title, artist or album</string>
+    <string name="searchTitle">Search</string>
+
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_current_song">CurrentSongActivity</string>
+</resources>
