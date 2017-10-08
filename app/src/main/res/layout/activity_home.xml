@@ -63,77 +63,117 @@
     <!--app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
     <android.support.v7.widget.CardView
-    android:id="@+id/bottomSheet"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:onClick="expandSongControls"
-    app:cardBackgroundColor="@color/bottomSheetColor"
-    app:cardCornerRadius="0dp"
-    app:cardElevation="24dp"
+        android:id="@+id/bottomSheet"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:onClick="expandSongControls"
         app:behavior_peekHeight="50dp"
-    app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+        app:cardBackgroundColor="@color/bottomSheetColor"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="24dp"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textViewSongTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Wish You Were Here"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/textViewSongArtist"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="5dp"
-                    android:text="Pink Floyd"
-                    android:textAlignment="center"
-                    android:layout_below="@+id/textViewSongTitle"
-                    android:layout_centerHorizontal="true" />
-
-            </RelativeLayout>
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/buttonPrevious"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="@android:drawable/ic_media_previous" />
+                    android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/buttonPlayPause"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:drawable/ic_media_play" />
+                    <TextView
+                        android:id="@+id/textViewSongTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Wish You Were Here"
+                        android:textAlignment="center" />
 
-                <Button
-                    android:id="@+id/buttonNext"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:id="@+id/textViewSongArtist"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textViewSongTitle"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="5dp"
+                        android:text="Pink Floyd"
+                        android:textAlignment="center" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="@android:drawable/ic_media_next" />
+                    android:layout_weight="2"
+                    android:orientation="horizontal">
+
+                    <ImageButton
+                        android:id="@+id/buttonPrevious"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_skip_previous_white_24px" />
+
+                    <ImageButton
+                        android:id="@+id/buttonPlayPause"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_play_arrow_white_24px" />
+
+                    <ImageButton
+                        android:id="@+id/buttonNext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_skip_next_white_24px" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/buttonRepeat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:src="@drawable/ic_repeat_white_24px"
+                    />
+
+                <SeekBar
+                    android:id="@+id/seekBar"
+                    style="@android:style/Widget.Material.Light.SeekBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1000"
+                    />
+
+                <ImageButton
+                    android:id="@+id/buttonRandom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:src="@drawable/ic_shuffle_white_24px" />
+            </LinearLayout>
         </LinearLayout>
 
 
