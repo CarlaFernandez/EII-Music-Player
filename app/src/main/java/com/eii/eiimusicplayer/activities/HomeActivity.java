@@ -1,8 +1,13 @@
 package com.eii.eiimusicplayer.activities;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,12 +17,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.MusicPlayerBSBehavior;
 import com.eii.eiimusicplayer.fragments.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
+    public static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
 
     // TODO cambiar este valor cuando hayamos hecho el reproductor
     /**
@@ -67,14 +74,55 @@ public class HomeActivity extends AppCompatActivity {
 //            }
 //        });
 
+//        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.MANAGE_DOCUMENTS}, 1);
+//        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
+//        intent.setType("*/*");
+//        startActivityForResult(Intent.createChooser(intent,"Open folder:"),1);
+
+
+        ActivityCompat.requestPermissions(HomeActivity.this,
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        startActivityForResult(Intent.createChooser(intent,"Open folder:"),1);
 
     }
 
     // Las vistas ya estan creadas
     @Override
-    public void onWindowFocusChanged (boolean hasFocus) {
+    public void onWindowFocusChanged(boolean hasFocus) {
         View bottomSheet = findViewById(R.id.bottomSheet);
         bottomSheetBehavior = new MusicPlayerBSBehavior(bottomSheet);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Toast.makeText(HomeActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
+        }
     }
 
 
@@ -100,7 +148,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void expandSongControls(View view){
+    public void expandSongControls(View view) {
         bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
