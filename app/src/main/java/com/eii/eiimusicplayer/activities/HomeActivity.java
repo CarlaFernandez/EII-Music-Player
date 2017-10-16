@@ -1,13 +1,11 @@
 package com.eii.eiimusicplayer.activities;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -20,11 +18,10 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.MusicPlayerBSBehavior;
 import com.eii.eiimusicplayer.fragments.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
-    public static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
     // TODO cambiar este valor cuando hayamos hecho el reproductor
     /**
@@ -82,10 +79,10 @@ public class HomeActivity extends AppCompatActivity {
 
         ActivityCompat.requestPermissions(HomeActivity.this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType("audio/mpeg3");
         startActivityForResult(Intent.createChooser(intent,"Open folder:"),1);
 
     }
@@ -94,7 +91,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         View bottomSheet = findViewById(R.id.bottomSheet);
-        bottomSheetBehavior = new MusicPlayerBSBehavior(bottomSheet);
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
     }
 
@@ -102,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
 
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
@@ -149,7 +146,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void expandSongControls(View view) {
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+        }
+        else{
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
 }

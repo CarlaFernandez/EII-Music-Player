@@ -66,111 +66,130 @@
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:onClick="expandSongControls"
+        android:alwaysDrawnWithCache="false"
         app:behavior_peekHeight="50dp"
-        app:cardBackgroundColor="@color/bottomSheetColor"
+        app:cardBackgroundColor="@null"
         app:cardCornerRadius="0dp"
         app:cardElevation="24dp"
         app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="false"
+            android:cropToPadding="false"
+            android:scaleType="centerCrop"
+            android:tint="@color/black_overlay"
+            app:srcCompat="@drawable/album_cover_test_2" />
+
         <LinearLayout
+            android:id="@+id/barLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/topBarLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/repInfoLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:onClick="expandSongControls"
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textViewSongTitle"
+                        android:id="@+id/song_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Wish You Were Here"
-                        android:textAlignment="center" />
+                        android:gravity="center"
+                        android:text="Opposite"
+                        android:textColor="@color/white" />
 
                     <TextView
-                        android:id="@+id/textViewSongArtist"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/artist_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/textViewSongTitle"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="5dp"
-                        android:text="Pink Floyd"
-                        android:textAlignment="center" />
-
-                </RelativeLayout>
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Biffy Clyro"
+                        android:textColor="@color/white" />
+                </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/repControlLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/buttonPrevious"
+                        android:id="@+id/prev_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_skip_previous_white_24px" />
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_skip_previous_white_24px" />
 
                     <ImageButton
-                        android:id="@+id/buttonPlayPause"
+                        android:id="@+id/play_pause_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_play_arrow_white_24px" />
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_play_arrow_white_24px" />
 
                     <ImageButton
-                        android:id="@+id/buttonNext"
+                        android:id="@+id/next_button"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_skip_next_white_24px" />
-
+                        android:background="@null"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/ic_skip_next_white_24px" />
                 </LinearLayout>
-
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/bottomBarLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/buttonRepeat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:src="@drawable/ic_repeat_white_24px" />
+                    android:id="@+id/repeat_button"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_shuffle_white_24px" />
 
                 <SeekBar
-                    android:id="@+id/seekBar"
-                    style="@android:style/Widget.Material.Light.SeekBar"
-                    android:layout_width="match_parent"
+                    android:id="@+id/rep_bar"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1000" />
+                    android:layout_weight="2" />
 
                 <ImageButton
-                    android:id="@+id/buttonRandom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingEnd="16dp"
-                    android:paddingStart="16dp"
-                    android:src="@drawable/ic_shuffle_white_24px" />
+                    android:id="@+id/random_button"
+                    android:layout_width="50dp"
+                    android:layout_height="match_parent"
+                    android:background="@null"
+                    android:padding="10dp"
+                    android:scaleType="fitCenter"
+                    app:srcCompat="@drawable/ic_repeat_white_24px" />
+
             </LinearLayout>
         </LinearLayout>
 
