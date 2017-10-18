@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.fragments;
+package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.SongListHelper;
-import com.eii.eiimusicplayer.Song;
+import com.eii.eiimusicplayer.songs.Song;
+import com.eii.eiimusicplayer.songs.SongListHelper;
 
 import java.util.ArrayList;
 import java.util.List;

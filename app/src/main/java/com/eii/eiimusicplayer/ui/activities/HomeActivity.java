@@ -1,12 +1,7 @@
-package com.eii.eiimusicplayer.activities;
+package com.eii.eiimusicplayer.ui.activities;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -22,13 +17,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.Song;
-import com.eii.eiimusicplayer.SongListHelper;
-import com.eii.eiimusicplayer.fragments.PlaceholderFragment;
-import com.eii.eiimusicplayer.fragments.SectionsPagerAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.ui.fragments.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
