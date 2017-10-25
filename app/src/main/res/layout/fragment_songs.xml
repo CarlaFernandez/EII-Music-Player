@@ -6,7 +6,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context=".ui.fragments.PlaceholderFragment">
+    tools:context=".ui.fragments.SongsFragment">
 
     <ListView
         android:id="@+id/list_view"

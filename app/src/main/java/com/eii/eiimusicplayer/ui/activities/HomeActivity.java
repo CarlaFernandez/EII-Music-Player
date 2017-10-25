@@ -84,7 +84,7 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
             SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
         } else {
-            Toast.makeText(HomeActivity.this, "Permission denied to read your External storage", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage", Toast.LENGTH_SHORT).show();
         }
         return;
     }

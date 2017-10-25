@@ -18,24 +18,23 @@ import java.util.List;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class PlaceholderFragment extends Fragment {
-    public static List<String> lista = new ArrayList<>();
-    ListView listView;
+public class SongsFragment extends Fragment {
+
     /**
      * The fragment argument representing the section number for this
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public PlaceholderFragment() {
+    public SongsFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static PlaceholderFragment newInstance(int sectionNumber) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static SongsFragment newInstance(int sectionNumber) {
+        SongsFragment fragment = new SongsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -45,16 +44,17 @@ public class PlaceholderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_songs, container, false);
 
+        // TODO load this in memory?? HashMap maybe?
+        // TODO order
         List<Song> songs = SongListHelper.getScannedSongs();
-        listView = (ListView) rootView.findViewById(R.id.list_view);
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view);
 
         List<String> songsListed = new ArrayList<>();
         for (Song s : songs){
             songsListed.add(s.toStringBasic());
         }
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>
                 (rootView.getContext(), android.R.layout.simple_list_item_1, songsListed);

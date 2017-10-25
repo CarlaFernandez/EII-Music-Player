@@ -25,14 +25,19 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         tabNames.add(applicationContext.getString(R.string.tabArtists));
         tabNames.add(applicationContext.getString(R.string.tabAlbums));
+        tabNames.add(applicationContext.getString(R.string.tabSongs));
         tabNames.add(applicationContext.getString(R.string.tabPlaylists));
+
     }
 
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        return PlaceholderFragment.newInstance(position + 1);
+        // Return a SongsFragment (defined as a static inner class below).
+        if (position == 2) {
+            return SongsFragment.newInstance(position + 1);
+        }
+        else return OtherFragment.newInstance(position + 1);
     }
 
     @Override
