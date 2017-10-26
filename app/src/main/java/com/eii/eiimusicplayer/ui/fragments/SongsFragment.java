@@ -2,17 +2,21 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.songs.MediaPlayerManager;
 import com.eii.eiimusicplayer.songs.Song;
 import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.songs.SongsPlaying;
+import com.eii.eiimusicplayer.ui.activities.HomeActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,17 +52,27 @@ public class SongsFragment extends Fragment {
 
         // TODO load this in memory?? HashMap maybe?
         // TODO order
-        List<Song> songs = SongListHelper.getScannedSongs();
+        final List<Song> songs = SongListHelper.getScannedSongs();
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
 
-        List<String> songsListed = new ArrayList<>();
-        for (Song s : songs){
-            songsListed.add(s.toStringBasic());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (rootView.getContext(), android.R.layout.simple_list_item_1, songsListed);
+        ArrayAdapter<Song> adapter = new ArrayAdapter<Song>
+                (rootView.getContext(), android.R.layout.simple_list_item_1, songs);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    Song song = songs.get(position);
+                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(getContext(), songs, position);
+                    MediaPlayerManager.getInstance().playSong(getContext(), song);
+                    HomeActivity.updateSongInfo();
+                } catch (Exception e) {
+                    Log.e("ERROR", "Wrong songPlaying position");
+                    Log.e("ERROR", e.getMessage());
+                }
+            }
+        });
 
         return rootView;
     }

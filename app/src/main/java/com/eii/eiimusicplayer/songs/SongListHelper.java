@@ -2,9 +2,6 @@ package com.eii.eiimusicplayer.songs;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -18,7 +15,8 @@ import java.util.List;
  */
 
 public class SongListHelper {
-    private static List<Song> songs = new ArrayList<>();
+    private static List<Song> scannedSongs = new ArrayList<>();
+    private static List<Song> currentSongList = new ArrayList<>();
 
     // TODO exception management
     public static void saveAllSongsFromExternalStorage(ContentResolver contentResolver) {
@@ -40,11 +38,11 @@ public class SongListHelper {
                         Song song = createSongWithMediaStore(cursor);
 
                         if (song != null) {
-                            songs.add(song);
+                            scannedSongs.add(song);
                         } else {
                             String displayName = cursor.getString(cursor
                                     .getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME));
-                            Log.i("ERROR", displayName);
+                            Log.e("ERROR", displayName);
                         }
                     }
                 }
@@ -53,6 +51,7 @@ public class SongListHelper {
                 cursor.close();
             }
         }
+        currentSongList.addAll(scannedSongs);
     }
 
     @NonNull
@@ -63,6 +62,9 @@ public class SongListHelper {
         long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
         String trackString = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK));
         String date = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.YEAR));
+        String fullPath = cursor.getString(cursor
+                .getColumnIndex(MediaStore.Audio.Media.DATA));
+
         int trackNumber;
         if (trackString.length() == 4) {
             trackNumber = Integer.parseInt(trackString.substring(1));
@@ -73,11 +75,12 @@ public class SongListHelper {
         // TODO Add album cover. Didn't delete "fullPath" parameter, just in case we need it to retrieve cover
         // TODO better "Unknown" management?
         return new Song(title, artist, album, String.valueOf(trackNumber),
-                date, String.valueOf(duration), null, null);
+                date, String.valueOf(duration), null, fullPath);
     }
 
     public static List<Song> getScannedSongs() {
-        Log.i("SONG", "returning " + songs.size() + " songs");
-        return songs;
+        Log.i("SONG", "returning " + scannedSongs.size() + " scannedSongs");
+        // TODO order
+        return currentSongList;
     }
 }

@@ -2,6 +2,7 @@ package com.eii.eiimusicplayer.ui.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -11,13 +12,19 @@ import android.support.v7.widget.Toolbar;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.songs.MediaPlayerManager;
 import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.songs.SongsPlaying;
 import com.eii.eiimusicplayer.ui.fragments.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity {
@@ -39,6 +46,11 @@ public class HomeActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private BottomSheetBehavior bottomSheetBehavior;
+    private static MediaPlayerManager mp;
+    private static TextView songName;
+    private static TextView artistName;
+    private static ImageButton playPause;
+    private static Resources resources;
 
 //    private View bottomSheet;
 
@@ -46,6 +58,12 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        songName = (TextView) findViewById(R.id.song_name);
+        artistName = (TextView) findViewById(R.id.artist_name);
+        playPause = (ImageButton)findViewById(R.id.play_pause_button);
+
+        resources = getResources();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +83,9 @@ public class HomeActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+        mp = MediaPlayerManager.getInstance();
+
     }
 
     // Las vistas ya estan creadas
@@ -75,6 +96,39 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    public void playPause(View view) {
+        if (mp.isPlaying()) {
+            mp.pause();
+            playPause.setImageDrawable(getResources()
+                    .getDrawable(R.drawable.ic_play_arrow_white_24px));
+        } else {
+            mp.play();
+            playPause.setImageDrawable(getResources()
+                    .getDrawable(R.drawable.ic_pause_white_24px));
+        }
+        // TODO cambiar imagen del boton
+    }
+
+    public static void updateSongInfo() {
+        songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
+        artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist());
+        if (mp.isPlaying()) {
+            playPause.setImageDrawable(resources
+                    .getDrawable(R.drawable.ic_pause_white_24px));
+        }
+    }
+
+    public void playNext(View view) {
+        Log.i("SONG", "Next");
+        SongsPlaying.getInstance().playNextSong();
+        updateSongInfo();
+    }
+
+    public void playPrevious(View view) {
+        Log.i("SONG", "Previous");
+        SongsPlaying.getInstance().playPreviousSong();
+        updateSongInfo();
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
@@ -84,7 +138,8 @@ public class HomeActivity extends AppCompatActivity {
             Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
             SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
         } else {
-            Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage", Toast.LENGTH_SHORT).show();
+            Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage",
+                    Toast.LENGTH_SHORT).show();
         }
         return;
     }

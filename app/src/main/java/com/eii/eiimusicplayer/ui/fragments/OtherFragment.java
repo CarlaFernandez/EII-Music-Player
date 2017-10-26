@@ -56,7 +56,7 @@ public class OtherFragment extends Fragment {
             songsListed.add(s.toStringOther());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+        ArrayAdapter<String> adapter = new ArrayAdapter<>
                 (rootView.getContext(), android.R.layout.simple_list_item_1, songsListed);
         listView.setAdapter(adapter);
 

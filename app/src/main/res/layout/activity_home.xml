@@ -136,6 +136,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:onClick="playPrevious"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/ic_skip_previous_white_24px" />
 
@@ -146,6 +147,7 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:scaleType="fitCenter"
+                        android:onClick="playPause"
                         app:srcCompat="@drawable/ic_play_arrow_white_24px" />
 
                     <ImageButton
@@ -154,6 +156,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:onClick="playNext"
                         android:scaleType="fitCenter"
                         app:srcCompat="@drawable/ic_skip_next_white_24px" />
                 </LinearLayout>

@@ -41,6 +41,38 @@ public class Song {
         this.fullPath = fullPath;
     }
 
+    public Bitmap getCover() {
+        return cover;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTrack() {
+        return track;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getFullPath() {
+        return fullPath;
+    }
+
     public String toStringBasic() {
         return title + '\n' + artist + '\n' + album + '\n' + date
                 +'\n' + track +'\n' + duration;
@@ -50,5 +82,11 @@ public class Song {
     public String toStringOther() {
         return title;
     }
+
+    public String toString(){
+        return title + '\n' + artist + '\n' + album + '\n' + date
+                +'\n' + track +'\n' + duration;
+    }
+
 }
 
