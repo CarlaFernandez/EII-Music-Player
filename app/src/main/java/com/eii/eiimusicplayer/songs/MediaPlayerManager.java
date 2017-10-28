@@ -51,6 +51,8 @@ public class MediaPlayerManager {
         mp.pause();
     }
 
+    public void play() { mp.start(); }
+
     public boolean isPlaying() {
         return mp.isPlaying();
     }
