@@ -2,6 +2,7 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,7 +67,6 @@ public class SongsFragment extends Fragment {
                     Song song = songs.get(position);
                     SongsPlaying.getInstance().setCurrentPlaylistAndSong(getContext(), songs, position);
                     MediaPlayerManager.getInstance().playSong(getContext(), song);
-                    HomeActivity.updateSongInfo();
                 } catch (Exception e) {
                     Log.e("ERROR", "Wrong songPlaying position");
                     Log.e("ERROR", e.getMessage());
