@@ -49,7 +49,7 @@ public class OtherFragment extends Fragment {
         // TODO load this in memory?? HashMap maybe?
         // TODO order
         List<Song> songs = SongListHelper.getScannedSongs();
-        ListView listView = (ListView) rootView.findViewById(R.id.list_view);
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view_songs);
 
         List<String> songsListed = new ArrayList<>();
         for (Song s : songs){

@@ -38,6 +38,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if (position == 2) {
             return SongsFragment.newInstance(position + 1);
         }
+        if(position==1){
+            return AlbumsFragment.newInstance(position+1);
+        }
         else return OtherFragment.newInstance(position + 1);
     }
 

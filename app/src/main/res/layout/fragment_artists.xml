@@ -9,7 +9,7 @@
     tools:context=".ui.fragments.SongsFragment">
 
     <ListView
-        android:id="@+id/list_view_songs"
+        android:id="@+id/list_view_artists"
         style="@style/AppCompatTheme.ListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

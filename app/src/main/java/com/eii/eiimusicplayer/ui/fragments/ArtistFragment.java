@@ -2,7 +2,6 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,14 +15,13 @@ import com.eii.eiimusicplayer.songs.MediaPlayerManager;
 import com.eii.eiimusicplayer.songs.Song;
 import com.eii.eiimusicplayer.songs.SongListHelper;
 import com.eii.eiimusicplayer.songs.SongsPlaying;
-import com.eii.eiimusicplayer.ui.activities.HomeActivity;
 
 import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
-public class SongsFragment extends Fragment {
+public class ArtistFragment extends Fragment {
 
     /**
      * The fragment argument representing the section number for this
@@ -31,15 +29,15 @@ public class SongsFragment extends Fragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public SongsFragment() {
+    public ArtistFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static SongsFragment newInstance(int sectionNumber) {
-        SongsFragment fragment = new SongsFragment();
+    public static ArtistFragment newInstance(int sectionNumber) {
+        ArtistFragment fragment = new ArtistFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
@@ -49,12 +47,12 @@ public class SongsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_songs, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_artists, container, false);
 
         // TODO load this in memory?? HashMap maybe?
         // TODO order
         final List<Song> songs = SongListHelper.getScannedSongs();
-        ListView listView = (ListView) rootView.findViewById(R.id.list_view_songs);
+        ListView listView = (ListView) rootView.findViewById(R.id.list_view_artists);
 
         ArrayAdapter<Song> adapter = new ArrayAdapter<Song>
                 (rootView.getContext(), android.R.layout.simple_list_item_1, songs);
