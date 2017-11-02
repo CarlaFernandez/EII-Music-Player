@@ -6,15 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.songs.Song;
 
 import java.util.List;
-
-import static android.widget.GridView.*;
 
 public class ImageAdapter extends BaseAdapter {
 
@@ -56,8 +53,8 @@ public class ImageAdapter extends BaseAdapter {
             TextView albumName = (TextView) retView.findViewById(R.id.album_name);
             TextView artistName = (TextView) retView.findViewById(R.id.artist_name);
 
-            albumName.setText(song.getAlbum());
-            artistName.setText(song.getArtist());
+            albumName.setText(song.getAlbum().getTitle());
+            artistName.setText(song.getArtist().getName());
 
         } else {
             retView = convertView;

@@ -9,33 +9,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.Song;
+import com.eii.eiimusicplayer.songs.Album;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Manuel on 01/11/2017.
  */
 
-public class AlbumArrayAdapter extends ArrayAdapter<String> {
+public class AlbumArrayAdapter extends ArrayAdapter<Album> {
 
     private final int resource;
 
     private final Context context;
-    private final String[] objects;
+    private final List<Album> objects;
 
-    public AlbumArrayAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull String[] objects) {
+
+    public AlbumArrayAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Album> objects) {
         super(context, resource, objects);
         this.resource = resource;
-        this.objects = objects;
         this.context = context;
+        this.objects = objects;
     }
-
 
     @NonNull
     @Override
@@ -46,10 +44,14 @@ public class AlbumArrayAdapter extends ArrayAdapter<String> {
             retView = layout.inflate(resource, null);
         }
 
-        String albumName = objects[position];
+        Album album = objects.get(position);
+
         TextView albumNameTx = (TextView) retView.findViewById(R.id.album_name);
         TextView artistNameTx = (TextView) retView.findViewById(R.id.album_artist);
-        albumNameTx.setText(albumName);
+
+        albumNameTx.setText(album.getTitle());
+        artistNameTx.setText(album.getArtist().getName());
+
         return retView;
 
 

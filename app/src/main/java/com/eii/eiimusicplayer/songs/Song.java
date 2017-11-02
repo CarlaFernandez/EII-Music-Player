@@ -25,15 +25,15 @@ public class Song {
 
     private String title;
     private String fullPath;
-    private String album;
-    private String artist;
+    private Album album;
+    private Artist artist;
 
     public Song(String title, String artist, String album, String trackNumber,
                 String date, String duration, Bitmap bmp, String fullPath) {
 
         this.title = title;
-        this.album = album == null ? NO_VALUE : album;
-        this.artist = artist == null ? NO_VALUE : artist;
+        this.album = album == null ? new Album(NO_VALUE) : new Album(album);
+        this.artist = artist == null ? new Artist(NO_VALUE) : new Artist(artist);
         this.track = trackNumber == null ? NO_VALUE : trackNumber;
         this.date = date == null ? NO_VALUE : date;
         this.duration = duration == null ? NO_VALUE : duration;
@@ -61,11 +61,11 @@ public class Song {
         return title;
     }
 
-    public String getAlbum() {
+    public Album getAlbum() {
         return album;
     }
 
-    public String getArtist() {
+    public Artist getArtist() {
         return artist;
     }
 
@@ -73,11 +73,26 @@ public class Song {
         return fullPath;
     }
 
-    public String toStringBasic() {
-        return title + '\n' + artist + '\n' + album + '\n' + date
-                +'\n' + track +'\n' + duration;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Song song = (Song) o;
+
+        if (title != null ? !title.equals(song.title) : song.title != null) return false;
+        if (album != null ? !album.equals(song.album) : song.album != null) return false;
+        return artist != null ? artist.equals(song.artist) : song.artist == null;
+
     }
 
+    @Override
+    public int hashCode() {
+        int result = title != null ? title.hashCode() : 0;
+        result = 31 * result + (album != null ? album.hashCode() : 0);
+        result = 31 * result + (artist != null ? artist.hashCode() : 0);
+        return result;
+    }
 
     public String toStringOther() {
         return title;

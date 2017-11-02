@@ -157,7 +157,7 @@ public class BottomSheetFragment extends Fragment {
 
     public void updateSongInfo() {
         songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
-        artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist());
+        artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
         if (mp.isPlaying()) {
             setImagePause();
         }

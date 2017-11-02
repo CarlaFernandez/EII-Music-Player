@@ -2,31 +2,21 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.MediaPlayerManager;
-import com.eii.eiimusicplayer.songs.Song;
+import com.eii.eiimusicplayer.songs.Album;
 import com.eii.eiimusicplayer.songs.SongListHelper;
-import com.eii.eiimusicplayer.songs.SongsPlaying;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class AlbumsFragment extends Fragment {
-    private HashMap<String, List<Song>> songsInAlbum;
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -34,7 +24,6 @@ public class AlbumsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public AlbumsFragment() {
-        songsInAlbum = new HashMap<>();
     }
 
     /**
@@ -57,11 +46,11 @@ public class AlbumsFragment extends Fragment {
 
         // TODO load this in memory?? HashMap maybe?
         // TODO order
-        final List<Song> songs = SongListHelper.getScannedSongs();
-        mapSongsToAlbums(songs);
+        final List<Album> albums = SongListHelper.getScannedAlbums();
+
 
         GridView gridView = (GridView) rootView.findViewById(R.id.grid_view_albums);
-        AlbumArrayAdapter adapter = new AlbumArrayAdapter(getContext(), R.layout.album_grid_item, (String[]) songsInAlbum.keySet().toArray());
+        AlbumArrayAdapter adapter = new AlbumArrayAdapter(getContext(), R.layout.album_grid_item, albums);
 
         gridView.setAdapter(adapter);
 
@@ -80,20 +69,5 @@ public class AlbumsFragment extends Fragment {
 //        });
 
         return rootView;
-    }
-
-    private void mapSongsToAlbums(List<Song> songs) {
-        for (Song song : songs) {
-            String album = song.getAlbum();
-            if (songsInAlbum.containsKey(album)) {
-                List<Song> songsForCurrentAlbum = songsInAlbum.get(album);
-                songsForCurrentAlbum.add(song);
-                songsInAlbum.put(album, songsForCurrentAlbum);
-            } else {
-                List<Song> songsForCurrentAlbum = new ArrayList<>();
-                songsForCurrentAlbum.add(song);
-                songsInAlbum.put(album, songsForCurrentAlbum);
-            }
-        }
     }
 }

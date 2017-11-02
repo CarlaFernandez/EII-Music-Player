@@ -17,6 +17,9 @@ import java.util.List;
 public class SongListHelper {
     private static List<Song> scannedSongs = new ArrayList<>();
     private static List<Song> currentSongList = new ArrayList<>();
+    private static List<Album> scannedAlbums = new ArrayList<>();
+    private static List<Artist> scannedArtists = new ArrayList<>();
+    ;
 
     // TODO exception management
     public static void saveAllSongsFromExternalStorage(ContentResolver contentResolver) {
@@ -52,13 +55,15 @@ public class SongListHelper {
             }
         }
         currentSongList.addAll(scannedSongs);
+        mapAlbumsAndArtists();
     }
+
 
     @NonNull
     private static Song createSongWithMediaStore(Cursor cursor) {
         String title = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TITLE));
-        String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
-        String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
+        String albumName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM));
+        String artistName = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST));
         long duration = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
         String trackString = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.TRACK));
         String date = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.YEAR));
@@ -74,13 +79,49 @@ public class SongListHelper {
 
         // TODO Add album cover. Didn't delete "fullPath" parameter, just in case we need it to retrieve cover
         // TODO better "Unknown" management?
-        return new Song(title, artist, album, String.valueOf(trackNumber),
+        return new Song(title, artistName, albumName, String.valueOf(trackNumber),
                 date, String.valueOf(duration), null, fullPath);
+    }
+
+    private static void mapAlbumsAndArtists() {
+        for (Song song : scannedSongs) {
+//            Album album = song.getAlbum();
+//            if (songsInAlbum.containsKey(album)) {
+//                List<Song> songsForCurrentAlbum = songsInAlbum.get(album);
+//                songsForCurrentAlbum.add(song);
+//                songsInAlbum.put(album, songsForCurrentAlbum);
+//            } else {
+//                List<Song> songsForCurrentAlbum = new ArrayList<>();
+//                songsForCurrentAlbum.add(song);
+//                songsInAlbum.put(album, songsForCurrentAlbum);
+//            }
+            Album album = song.getAlbum();
+            Artist artist = song.getArtist();
+
+            album.addSong(song);
+            artist.addAlbum(album);
+
+            if (!scannedAlbums.contains(album)) {
+                scannedAlbums.add(album);
+            }
+            if (!scannedArtists.contains(artist)) {
+                scannedArtists.add(artist);
+            }
+        }
+
+//        for (Album album : songsInAlbum.keySet()){
+//            album.setSongs(songsInAlbum.get(album));
+//        }
     }
 
     public static List<Song> getScannedSongs() {
         Log.i("SONG", "returning " + scannedSongs.size() + " scannedSongs");
         // TODO order
         return currentSongList;
+    }
+
+    public static List<Album> getScannedAlbums() {
+        Log.i("ALBUM", "returning " + scannedAlbums.size() + " scannedAlbums");
+        return scannedAlbums;
     }
 }
