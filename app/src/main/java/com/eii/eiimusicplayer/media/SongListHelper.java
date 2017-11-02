@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.songs;
+package com.eii.eiimusicplayer.media;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
@@ -6,6 +6,10 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
+
+import com.eii.eiimusicplayer.media.pojo.Album;
+import com.eii.eiimusicplayer.media.pojo.Artist;
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,21 +84,11 @@ public class SongListHelper {
         // TODO Add album cover. Didn't delete "fullPath" parameter, just in case we need it to retrieve cover
         // TODO better "Unknown" management?
         return new Song(title, artistName, albumName, String.valueOf(trackNumber),
-                date, String.valueOf(duration), null, fullPath);
+                date, String.valueOf(duration), fullPath);
     }
 
     private static void mapAlbumsAndArtists() {
         for (Song song : scannedSongs) {
-//            Album album = song.getAlbum();
-//            if (songsInAlbum.containsKey(album)) {
-//                List<Song> songsForCurrentAlbum = songsInAlbum.get(album);
-//                songsForCurrentAlbum.add(song);
-//                songsInAlbum.put(album, songsForCurrentAlbum);
-//            } else {
-//                List<Song> songsForCurrentAlbum = new ArrayList<>();
-//                songsForCurrentAlbum.add(song);
-//                songsInAlbum.put(album, songsForCurrentAlbum);
-//            }
             Album album = song.getAlbum();
             Artist artist = song.getArtist();
 
@@ -108,10 +102,6 @@ public class SongListHelper {
                 scannedArtists.add(artist);
             }
         }
-
-//        for (Album album : songsInAlbum.keySet()){
-//            album.setSongs(songsInAlbum.get(album));
-//        }
     }
 
     public static List<Song> getScannedSongs() {
@@ -123,5 +113,10 @@ public class SongListHelper {
     public static List<Album> getScannedAlbums() {
         Log.i("ALBUM", "returning " + scannedAlbums.size() + " scannedAlbums");
         return scannedAlbums;
+    }
+
+    public static List<Artist> getScannedArtists() {
+        Log.i("ARTIST", "returning " + scannedArtists.size() + " scannedArtists");
+        return scannedArtists;
     }
 }

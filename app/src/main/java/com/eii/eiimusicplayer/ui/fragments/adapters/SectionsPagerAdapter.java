@@ -1,12 +1,15 @@
-package com.eii.eiimusicplayer.ui.fragments;
+package com.eii.eiimusicplayer.ui.fragments.adapters;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.ui.fragments.AlbumsFragment;
+import com.eii.eiimusicplayer.ui.fragments.ArtistFragment;
+import com.eii.eiimusicplayer.ui.fragments.OtherFragment;
+import com.eii.eiimusicplayer.ui.fragments.SongsFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private Context applicationContext;
     private List<String> tabNames;
+
 
     public SectionsPagerAdapter(FragmentManager fm, Context applicationContext) {
         super(fm);
@@ -33,15 +37,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a SongsFragment (defined as a static inner class below).
-        if (position == 2) {
-            return SongsFragment.newInstance(position + 1);
+        switch (position) {
+            case 0:
+                return ArtistFragment.newInstance(position + 1);
+            case 1:
+                return AlbumsFragment.newInstance(position + 1);
+            case 2:
+                return SongsFragment.newInstance(position + 1);
+            default:
+                return OtherFragment.newInstance(position + 1);
+
         }
-        if(position==1){
-            return AlbumsFragment.newInstance(position+1);
-        }
-        else return OtherFragment.newInstance(position + 1);
     }
 
     @Override

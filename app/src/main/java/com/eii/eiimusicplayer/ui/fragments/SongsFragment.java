@@ -2,7 +2,6 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.MediaPlayerManager;
-import com.eii.eiimusicplayer.songs.Song;
-import com.eii.eiimusicplayer.songs.SongListHelper;
-import com.eii.eiimusicplayer.songs.SongsPlaying;
-import com.eii.eiimusicplayer.ui.activities.HomeActivity;
+import com.eii.eiimusicplayer.media.MediaPlayerManager;
+import com.eii.eiimusicplayer.media.SongListHelper;
+import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.util.List;
 

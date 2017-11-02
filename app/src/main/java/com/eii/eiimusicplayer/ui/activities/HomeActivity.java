@@ -12,13 +12,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
-import com.eii.eiimusicplayer.ui.fragments.SectionsPagerAdapter;
+import com.eii.eiimusicplayer.ui.fragments.adapters.SectionsPagerAdapter;
 
 public class HomeActivity extends AppCompatActivity implements BottomSheetFragment.OnFragmentInteractionListener {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;

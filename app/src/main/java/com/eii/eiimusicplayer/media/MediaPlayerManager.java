@@ -1,7 +1,5 @@
-package com.eii.eiimusicplayer.songs;
+package com.eii.eiimusicplayer.media;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -9,6 +7,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.eii.eiimusicplayer.media.pojo.Song;
 import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
 
 import java.io.IOException;

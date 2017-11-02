@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.songs;
+package com.eii.eiimusicplayer.media.pojo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,8 +61,7 @@ public class Album {
 
     @Override
     public String toString() {
-        return "Album{" +
-                "title='" + title + '\'' +
-                ", artist=" + artist;
+        return title + '\n' +
+                artist;
     }
 }

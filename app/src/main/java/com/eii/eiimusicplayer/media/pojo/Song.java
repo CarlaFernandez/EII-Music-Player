@@ -1,24 +1,11 @@
-package com.eii.eiimusicplayer.songs;
-
-import android.graphics.Bitmap;
+package com.eii.eiimusicplayer.media.pojo;
 
 /**
  * Created by Carla on 18/10/2017.
  */
 
 public class Song {
-//    private String title;
-//    private String artist;
-//    private String album;
-//    private String albumArtist;
-//    private String trackNumber;
-//    private Date date;
-//    private String duration;
-//    private String genre;
-//    private Bitmap bitmap;
-
     public final static String NO_VALUE = "Unknown";
-    private Bitmap cover;
     private String duration;
     private String date;
     private String track;
@@ -29,7 +16,7 @@ public class Song {
     private Artist artist;
 
     public Song(String title, String artist, String album, String trackNumber,
-                String date, String duration, Bitmap bmp, String fullPath) {
+                String date, String duration, String fullPath) {
 
         this.title = title;
         this.album = album == null ? new Album(NO_VALUE) : new Album(album);
@@ -37,12 +24,7 @@ public class Song {
         this.track = trackNumber == null ? NO_VALUE : trackNumber;
         this.date = date == null ? NO_VALUE : date;
         this.duration = duration == null ? NO_VALUE : duration;
-        this.cover = bmp;
         this.fullPath = fullPath;
-    }
-
-    public Bitmap getCover() {
-        return cover;
     }
 
     public String getDuration() {

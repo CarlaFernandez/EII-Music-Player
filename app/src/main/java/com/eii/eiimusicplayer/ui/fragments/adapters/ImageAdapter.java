@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.ui.fragments;
+package com.eii.eiimusicplayer.ui.fragments.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.Song;
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.util.List;
 

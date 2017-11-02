@@ -13,8 +13,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.MediaPlayerManager;
-import com.eii.eiimusicplayer.songs.SongsPlaying;
+import com.eii.eiimusicplayer.media.MediaPlayerManager;
+import com.eii.eiimusicplayer.media.SongsPlaying;
 
 /**
  * A simple {@link Fragment} subclass.

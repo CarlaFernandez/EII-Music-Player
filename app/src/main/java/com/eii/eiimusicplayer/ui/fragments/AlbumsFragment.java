@@ -8,9 +8,11 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.Album;
-import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.media.SongListHelper;
+import com.eii.eiimusicplayer.media.pojo.Album;
+import com.eii.eiimusicplayer.ui.fragments.adapters.AlbumArrayAdapter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -44,16 +46,17 @@ public class AlbumsFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_albums, container, false);
 
-        // TODO load this in memory?? HashMap maybe?
         // TODO order
         final List<Album> albums = SongListHelper.getScannedAlbums();
-
-
+        Collections.sort(
+                albums, new NameComparator<Album>()
+        );
         GridView gridView = (GridView) rootView.findViewById(R.id.grid_view_albums);
         AlbumArrayAdapter adapter = new AlbumArrayAdapter(getContext(), R.layout.album_grid_item, albums);
 
         gridView.setAdapter(adapter);
 
+        //TODO onclick
 //        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

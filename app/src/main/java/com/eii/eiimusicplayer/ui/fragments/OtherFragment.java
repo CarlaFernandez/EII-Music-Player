@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.Song;
-import com.eii.eiimusicplayer.songs.SongListHelper;
+import com.eii.eiimusicplayer.media.SongListHelper;
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.util.ArrayList;
 import java.util.List;

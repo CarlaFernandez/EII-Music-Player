@@ -1,7 +1,9 @@
-package com.eii.eiimusicplayer.songs;
+package com.eii.eiimusicplayer.media;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.util.List;
 

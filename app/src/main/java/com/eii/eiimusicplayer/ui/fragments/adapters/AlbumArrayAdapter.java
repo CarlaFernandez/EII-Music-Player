@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.ui.fragments;
+package com.eii.eiimusicplayer.ui.fragments.adapters;
 
 
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.songs.Album;
+import com.eii.eiimusicplayer.media.pojo.Album;
 
 import java.util.List;
 
