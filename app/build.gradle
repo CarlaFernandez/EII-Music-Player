@@ -40,3 +40,13 @@ dependencies {
     compile 'com.nononsenseapps:filepicker:4.1.0'
     testCompile 'junit:junit:4.12'
 }
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.google.com' }
+}
+
+dependencies {
+    compile 'com.github.bumptech.glide:glide:4.3.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
+}
