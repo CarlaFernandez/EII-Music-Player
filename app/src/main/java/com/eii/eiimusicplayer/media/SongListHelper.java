@@ -1,16 +1,20 @@
 package com.eii.eiimusicplayer.media;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.widget.ImageView;
 
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Artist;
 import com.eii.eiimusicplayer.media.pojo.Song;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +77,11 @@ public class SongListHelper {
         String date = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.Media.YEAR));
         String fullPath = cursor.getString(cursor
                 .getColumnIndex(MediaStore.Audio.Media.DATA));
+        int albumIdIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
+        int albumId = cursor.getInt(albumIdIndex);
+
+        Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
+        Uri uriArtwork = ContentUris.withAppendedId(sArtworkUri, albumId);
 
         int trackNumber;
         if (trackString.length() == 4) {
@@ -84,7 +93,7 @@ public class SongListHelper {
         // TODO Add album cover. Didn't delete "fullPath" parameter, just in case we need it to retrieve cover
         // TODO better "Unknown" management?
         return new Song(title, artistName, albumName, String.valueOf(trackNumber),
-                date, String.valueOf(duration), fullPath);
+                date, String.valueOf(duration), fullPath, uriArtwork);
     }
 
     private static void mapAlbumsAndArtists() {

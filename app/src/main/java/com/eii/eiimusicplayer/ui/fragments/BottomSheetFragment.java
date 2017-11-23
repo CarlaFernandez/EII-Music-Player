@@ -1,7 +1,11 @@
 package com.eii.eiimusicplayer.ui.fragments;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,6 +24,9 @@ import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongsPlaying;
 
+import java.io.File;
+import java.io.IOException;
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -30,11 +37,13 @@ import com.eii.eiimusicplayer.media.SongsPlaying;
  */
 public class BottomSheetFragment extends Fragment {
     public static final String TAG = "BOTTOM_SHEET_FRAGMENT";
+    public static Bitmap placeholder;
     private static MediaPlayerManager mp;
     private TextView songName;
     private TextView artistName;
     private ImageButton playPause;
     private ImageView image;
+
 
     private OnFragmentInteractionListener mListener;
     private BottomSheetBehavior<View> bottomSheetBehavior;
@@ -71,8 +80,11 @@ public class BottomSheetFragment extends Fragment {
         artistName = (TextView) v.findViewById(R.id.artist_name);
         playPause = (ImageButton) v.findViewById(R.id.play_pause_button);
         image = (ImageView) v.findViewById(R.id.imageView);
+        placeholder = BitmapFactory.decodeResource(getContext().getResources(),
+                R.drawable.album_artwork_placeholder_detail);
+        image.setImageBitmap(placeholder);
+        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-        Glide.with(this).load(R.drawable.album_cover_test_2).into(image);
 
         View bottomSheet = v.findViewById(R.id.bottomSheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -168,9 +180,17 @@ public class BottomSheetFragment extends Fragment {
     public void updateSongInfo() {
         songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
         artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
+        Uri uri = SongsPlaying.getInstance().getSongPlaying().getUriArtwork();
 
-        // TODO: BUSCAR IMAGEN DEl ALBUM Y CARGARLA EN EL IMAGEVIEW CON -> Glide.with(this).load(<imagen>).into(image); UNA SOLUCION MAS CORRECTA SERIA AÑADIR UN ATRIBUTO EN LA CLASE SONG QUE HAGA REFERENCIA AL ALBUM
-
+        try {
+            Bitmap cover = MediaStore.Images.Media.getBitmap(super.getContext().getContentResolver(),uri);
+            image.setImageBitmap(cover);
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        } catch (IOException e) {
+            image.setImageBitmap(placeholder);
+            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            e.printStackTrace();
+        }
 
         if (mp.isPlaying()) {
             setImagePause();

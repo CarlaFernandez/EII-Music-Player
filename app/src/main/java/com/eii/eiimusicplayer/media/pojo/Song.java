@@ -1,5 +1,7 @@
 package com.eii.eiimusicplayer.media.pojo;
 
+import android.net.Uri;
+
 /**
  * Created by Carla on 18/10/2017.
  */
@@ -12,11 +14,13 @@ public class Song {
 
     private String title;
     private String fullPath;
+
+    private Uri uriArtwork;
     private Album album;
     private Artist artist;
 
     public Song(String title, String artist, String album, String trackNumber,
-                String date, String duration, String fullPath) {
+                String date, String duration, String fullPath, Uri uriArtwork) {
 
         this.title = title;
         this.album = album == null ? new Album(NO_VALUE) : new Album(album);
@@ -25,6 +29,7 @@ public class Song {
         this.date = date == null ? NO_VALUE : date;
         this.duration = duration == null ? NO_VALUE : duration;
         this.fullPath = fullPath;
+        this.uriArtwork = uriArtwork;
     }
 
     public String getDuration() {
@@ -54,6 +59,9 @@ public class Song {
     public String getFullPath() {
         return fullPath;
     }
+
+    public Uri getUriArtwork() { return uriArtwork; }
+
 
     @Override
     public boolean equals(Object o) {
