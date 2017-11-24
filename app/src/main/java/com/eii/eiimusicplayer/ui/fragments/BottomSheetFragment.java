@@ -1,14 +1,13 @@
 package com.eii.eiimusicplayer.ui.fragments;
 
-import android.content.ContentResolver;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
+import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,32 +16,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongsPlaying;
 import com.eii.eiimusicplayer.ui.utils.ImageUtils;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link BottomSheetFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link BottomSheetFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BottomSheetFragment extends Fragment {
     public static final String TAG = "BOTTOM_SHEET_FRAGMENT";
     private static MediaPlayerManager mp;
     private TextView songName;
     private TextView artistName;
+    private TextView currentDurationTx;
     private ImageButton playPause;
+    private ImageButton loopButton;
     private ImageView image;
+    private SeekBar seekBar;
+    private Handler seekTimeHandler;
 
 
     private OnFragmentInteractionListener mListener;
@@ -63,9 +57,13 @@ public class BottomSheetFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
 
+        seekTimeHandler = new Handler();
+
         songName = (TextView) v.findViewById(R.id.song_name);
         artistName = (TextView) v.findViewById(R.id.artist_name);
+        currentDurationTx = (TextView) v.findViewById(R.id.duration_current);
         playPause = (ImageButton) v.findViewById(R.id.play_pause_button);
+        loopButton = (ImageButton) v.findViewById(R.id.repeat_button);
 
         image = (ImageView) v.findViewById(R.id.imageView);
         ImageUtils.setImageOrPlaceholder(super.getContext(), image, null);
@@ -73,9 +71,13 @@ public class BottomSheetFragment extends Fragment {
         View bottomSheet = v.findViewById(R.id.bottomSheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
 
+        seekBar = (SeekBar) v.findViewById(R.id.rep_bar);
+
         mp = MediaPlayerManager.getInstance();
 
         createOnClickListeners(v);
+
+        mUpdateTimeTask.run();
 
         return v;
     }
@@ -108,7 +110,52 @@ public class BottomSheetFragment extends Fragment {
                 playPause();
             }
         });
+
+        createSeekBarListeners();
+
     }
+
+    private void createSeekBarListeners() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if (fromUser) {
+                    mp.seekTo(progress);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+
+    }
+
+    private Runnable mUpdateTimeTask = new Runnable() {
+        public static final long SEEK_UPDATE_TIME = 1000;
+
+        public void run() {
+            int currentDuration = mp.getCurrrentPosition();
+            @SuppressLint("DefaultLocale") String timeCurrent = String.format("%02d:%02d",
+                    TimeUnit.MILLISECONDS.toMinutes(currentDuration),
+                    TimeUnit.MILLISECONDS.toSeconds(currentDuration) -
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentDuration))
+            );
+            currentDurationTx.setText(timeCurrent);
+
+            seekBar.setProgress(currentDuration);
+
+            seekTimeHandler.postDelayed(this, SEEK_UPDATE_TIME);
+
+            if (mp.isPlaying() &&
+                    currentDuration >= mp.getDuration() - SEEK_UPDATE_TIME ){
+                playNext();
+            }
+        }
+    };
+
 
     @Override
     public void onAttach(Context context) {
@@ -142,12 +189,12 @@ public class BottomSheetFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void setImagePlay() {
+    private void setImagePlay() {
         playPause.setImageDrawable(getResources()
                 .getDrawable(R.drawable.ic_play_arrow_white_24px));
     }
 
-    public void setImagePause() {
+    private void setImagePause() {
         playPause.setImageDrawable(getResources()
                 .getDrawable(R.drawable.ic_pause_white_24px));
     }
@@ -157,6 +204,9 @@ public class BottomSheetFragment extends Fragment {
         artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
         Uri uri = SongsPlaying.getInstance().getSongPlaying().getAlbum().getUriArtwork();
 
+        seekBar.setMax(MediaPlayerManager.getInstance().getDuration());
+        seekBar.setProgress(0);
+
         ImageUtils.setImageOrPlaceholder(super.getContext(), image, uri);
 
         if (mp.isPlaying()) {
@@ -164,7 +214,7 @@ public class BottomSheetFragment extends Fragment {
         }
     }
 
-    public void expandSongControls() {
+    private void expandSongControls() {
         if (bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED) {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         } else {
@@ -172,24 +222,23 @@ public class BottomSheetFragment extends Fragment {
         }
     }
 
-    public void playPause() {
+    private void playPause() {
         if (mp.isPlaying()) {
             mp.pause();
             setImagePlay();
-        }
-        else if (mp.hasSongSet()){
+        } else if (mp.hasSongSet()) {
             mp.play();
             setImagePause();
         }
     }
 
-    public void playNext() {
+    private void playNext() {
         Log.i("SONG", "Next");
         SongsPlaying.getInstance().playNextSong();
         updateSongInfo();
     }
 
-    public void playPrevious() {
+    private void playPrevious() {
         Log.i("SONG", "Previous");
         SongsPlaying.getInstance().playPreviousSong();
         updateSongInfo();

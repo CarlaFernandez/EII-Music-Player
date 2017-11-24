@@ -78,4 +78,17 @@ public class MediaPlayerManager {
     public boolean hasSongSet() {
         return songSet;
     }
+
+    public int getDuration() {
+        return mp.getDuration();
+    }
+
+    public int getCurrrentPosition() {
+        return mp.getCurrentPosition();
+    }
+
+    public void seekTo(int progress) {
+        mp.seekTo(progress);
+    }
+
 }

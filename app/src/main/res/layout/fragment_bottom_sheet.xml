@@ -117,6 +117,13 @@
                     android:scaleType="fitCenter"
                     app:srcCompat="@drawable/ic_shuffle_white_24px" />
 
+                <TextView
+                    android:id="@+id/duration_current"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:layout_weight="1" />
+
                 <SeekBar
                     android:id="@+id/rep_bar"
                     android:layout_width="wrap_content"
