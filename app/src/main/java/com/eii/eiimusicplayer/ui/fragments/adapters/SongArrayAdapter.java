@@ -1,6 +1,5 @@
 package com.eii.eiimusicplayer.ui.fragments.adapters;
 
-
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,23 +13,24 @@ import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.pojo.Album;
+import com.eii.eiimusicplayer.media.pojo.Song;
 import com.eii.eiimusicplayer.ui.utils.ImageUtils;
 
 import java.util.List;
 
 /**
- * Created by Manuel on 01/11/2017.
+ * Created by Carla on 24/11/2017.
  */
 
-public class AlbumArrayAdapter extends ArrayAdapter<Album> {
+public class SongArrayAdapter extends ArrayAdapter<Song> {
 
     private final int resource;
 
     private final Context context;
-    private final List<Album> objects;
+    private final List<Song> objects;
 
 
-    public AlbumArrayAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Album> objects) {
+    public SongArrayAdapter(@NonNull Context context, @LayoutRes int resource, @NonNull List<Song> objects) {
         super(context, resource, objects);
         this.resource = resource;
         this.context = context;
@@ -46,19 +46,21 @@ public class AlbumArrayAdapter extends ArrayAdapter<Album> {
             retView = layout.inflate(resource, null);
         }
 
-        Album album = objects.get(position);
+        Song song = objects.get(position);
 
-        TextView albumNameTx = (TextView) retView.findViewById(R.id.album_grid_album_name);
-        TextView artistNameTx = (TextView) retView.findViewById(R.id.album_grid_album_artist);
+        TextView songNameTx = (TextView) retView.findViewById(R.id.song_list_song_title);
+        TextView albumNameTx = (TextView) retView.findViewById(R.id.song_list_album_title);
+        TextView artistNameTx = (TextView) retView.findViewById(R.id.song_list_artist);
+        TextView trackNumTx = (TextView) retView.findViewById(R.id.song_list_track_number);
 
-        ImageView imageView = (ImageView) retView.findViewById(R.id.album_grid_album_image);
-        ImageUtils.setImageOrPlaceholderFit(getContext(), imageView, album.getUriArtwork());
-
-        albumNameTx.setText(album.getTitle());
-        artistNameTx.setText(album.getArtist().getName());
+        albumNameTx.setText(song.getAlbum().getTitle());
+        songNameTx.setText(song.getTitle());
+        artistNameTx.setText(song.getArtist().getName());
+        trackNumTx.setText(song.getTrack());
 
         return retView;
 
 
     }
 }
+

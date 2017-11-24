@@ -54,7 +54,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Opposite"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -63,7 +62,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
-                        android:text="Biffy Clyro"
                         android:textColor="@color/white" />
                 </LinearLayout>
 

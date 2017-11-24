@@ -50,7 +50,7 @@ public class ImageAdapter extends BaseAdapter {
             retView = layout.inflate(R.layout.album_grid_item, parent, false);
             retView.setLayoutParams(new GridView.LayoutParams(85, 85));
             Song song = songs.get(position);
-            TextView albumName = (TextView) retView.findViewById(R.id.album_name);
+            TextView albumName = (TextView) retView.findViewById(R.id.album_grid_album_name);
             TextView artistName = (TextView) retView.findViewById(R.id.artist_name);
 
             albumName.setText(song.getAlbum().getTitle());

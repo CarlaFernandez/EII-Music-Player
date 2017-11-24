@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.ui.utils.ImageUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,6 @@ import java.io.IOException;
  */
 public class BottomSheetFragment extends Fragment {
     public static final String TAG = "BOTTOM_SHEET_FRAGMENT";
-    public static Bitmap placeholder;
     private static MediaPlayerManager mp;
     private TextView songName;
     private TextView artistName;
@@ -52,20 +52,6 @@ public class BottomSheetFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BottomSheetFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BottomSheetFragment newInstance(String param1, String param2) {
-        BottomSheetFragment fragment = new BottomSheetFragment();
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,15 +62,13 @@ public class BottomSheetFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
+
         songName = (TextView) v.findViewById(R.id.song_name);
         artistName = (TextView) v.findViewById(R.id.artist_name);
         playPause = (ImageButton) v.findViewById(R.id.play_pause_button);
-        image = (ImageView) v.findViewById(R.id.imageView);
-        placeholder = BitmapFactory.decodeResource(getContext().getResources(),
-                R.drawable.album_artwork_placeholder_detail);
-        image.setImageBitmap(placeholder);
-        image.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
+        image = (ImageView) v.findViewById(R.id.imageView);
+        ImageUtils.setImageOrPlaceholder(super.getContext(), image, null);
 
         View bottomSheet = v.findViewById(R.id.bottomSheet);
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
@@ -92,8 +76,6 @@ public class BottomSheetFragment extends Fragment {
         mp = MediaPlayerManager.getInstance();
 
         createOnClickListeners(v);
-
-
 
         return v;
     }
@@ -126,13 +108,6 @@ public class BottomSheetFragment extends Fragment {
                 playPause();
             }
         });
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
     }
 
     @Override
@@ -180,17 +155,9 @@ public class BottomSheetFragment extends Fragment {
     public void updateSongInfo() {
         songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
         artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
-        Uri uri = SongsPlaying.getInstance().getSongPlaying().getUriArtwork();
+        Uri uri = SongsPlaying.getInstance().getSongPlaying().getAlbum().getUriArtwork();
 
-        try {
-            Bitmap cover = MediaStore.Images.Media.getBitmap(super.getContext().getContentResolver(),uri);
-            image.setImageBitmap(cover);
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } catch (IOException e) {
-            image.setImageBitmap(placeholder);
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            e.printStackTrace();
-        }
+        ImageUtils.setImageOrPlaceholder(super.getContext(), image, uri);
 
         if (mp.isPlaying()) {
             setImagePause();

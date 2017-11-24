@@ -1,5 +1,7 @@
 package com.eii.eiimusicplayer.media.pojo;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,15 +12,12 @@ import java.util.List;
 public class Album {
     private String title;
     private Artist artist;
+    private Uri uriArtwork;
     private List<Song> songs;
 
     public Album(String albumName) {
         this.title = albumName;
         this.songs = new ArrayList<>();
-    }
-
-    public void setSongs(List<Song> songs) {
-        this.songs = songs;
     }
 
     public String getTitle() {
@@ -29,11 +28,19 @@ public class Album {
         return artist;
     }
 
+    public Uri getUriArtwork() {
+        return uriArtwork;
+    }
+
     public List<Song> getSongs() {
         return songs;
     }
 
     public void addSong(Song song) {
+        if (uriArtwork == null){
+            uriArtwork = song.getUriArtwork();
+        }
+
         if (!songs.contains(song)) {
             this.songs.add(song);
             this.artist = song.getArtist();

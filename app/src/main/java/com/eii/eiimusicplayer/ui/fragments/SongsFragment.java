@@ -14,8 +14,11 @@ import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Song;
+import com.eii.eiimusicplayer.ui.fragments.adapters.SongArrayAdapter;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -52,10 +55,12 @@ public class SongsFragment extends Fragment {
         // TODO load this in memory?? HashMap maybe?
         // TODO order
         final List<Song> songs = SongListHelper.getScannedSongs();
+        Collections.sort(
+                songs, new NameComparator<Song>()
+        );
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_songs);
+        SongArrayAdapter adapter = new SongArrayAdapter(getContext(), R.layout.song_list_item, songs);
 
-        ArrayAdapter<Song> adapter = new ArrayAdapter<Song>
-                (rootView.getContext(), android.R.layout.simple_list_item_1, songs);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

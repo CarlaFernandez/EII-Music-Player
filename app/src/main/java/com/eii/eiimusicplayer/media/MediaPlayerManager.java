@@ -59,6 +59,7 @@ public class MediaPlayerManager {
     public void playSong(Context context, Song song) {
         if (song == null || context == null){
             // TODO exceptionnnn
+            return;
         }
 
         setSong(context, song);

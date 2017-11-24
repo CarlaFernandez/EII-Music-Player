@@ -46,7 +46,6 @@ public class ArtistFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_artists, container, false);
 
-        // TODO order
         final List<Artist> artists = SongListHelper.getScannedArtists();
         Collections.sort(artists, new NameComparator<>());
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_artists);
@@ -55,6 +54,7 @@ public class ArtistFragment extends Fragment {
                 (rootView.getContext(), android.R.layout.simple_list_item_1, artists);
         listView.setAdapter(adapter);
 
+        // TODO onclick
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

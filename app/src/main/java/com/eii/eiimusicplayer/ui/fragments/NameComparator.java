@@ -2,6 +2,7 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Artist;
+import com.eii.eiimusicplayer.media.pojo.Song;
 
 /**
  * Created by Carla on 02/11/2017.
@@ -17,6 +18,10 @@ class NameComparator<T> implements java.util.Comparator<T> {
         } else if (o1 instanceof Album && o2 instanceof Album) {
             Album a1 = (Album) o1;
             Album a2 = (Album) o2;
+            return a1.getTitle().compareToIgnoreCase(a2.getTitle());
+        } else if (o1 instanceof Song && o2 instanceof Song) {
+            Song a1 = (Song) o1;
+            Song a2 = (Song) o2;
             return a1.getTitle().compareToIgnoreCase(a2.getTitle());
         } else return 0;
     }
