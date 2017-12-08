@@ -46,4 +46,8 @@ public class Artist {
     public String toString() {
         return name;
     }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
 }

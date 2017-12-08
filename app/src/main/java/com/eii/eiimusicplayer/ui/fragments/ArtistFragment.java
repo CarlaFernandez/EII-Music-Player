@@ -2,15 +2,22 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
+import com.eii.eiimusicplayer.media.SongsPlaying;
 import com.eii.eiimusicplayer.media.pojo.Artist;
+import com.eii.eiimusicplayer.media.pojo.Song;
+import com.eii.eiimusicplayer.ui.fragments.adapters.ArtistArrayAdapter;
+import com.eii.eiimusicplayer.ui.fragments.adapters.SongArrayAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -47,20 +54,20 @@ public class ArtistFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_artists, container, false);
 
         final List<Artist> artists = SongListHelper.getScannedArtists();
-        Collections.sort(artists, new NameComparator<>());
+        Collections.sort(
+                artists, new NameComparator<Artist>()
+        );
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_artists);
+        ArtistArrayAdapter adapter = new ArtistArrayAdapter(getContext(), R.layout.artist_list_item, artists);
 
-        ArrayAdapter<Artist> adapter = new ArrayAdapter<>
-                (rootView.getContext(), android.R.layout.simple_list_item_1, artists);
         listView.setAdapter(adapter);
 
-        // TODO onclick
 //        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //                try {
-//                    Song song = artists.get(position);
-//                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(getContext(), artists, position);
+//                    Song song = songs.get(position);
+//                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(getContext(), songs, position);
 //                    MediaPlayerManager.getInstance().playSong(getContext(), song);
 //                } catch (Exception e) {
 //                    Log.e("ERROR", "Wrong songPlaying position");

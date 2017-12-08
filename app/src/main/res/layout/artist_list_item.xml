@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/artist_list_artist_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="PlaceholderArtist"
+        android:textAlignment="textStart"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/artist_list_artist_numAlbums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="x albums"
+        android:layout_below="@+id/artist_list_artist_name"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>

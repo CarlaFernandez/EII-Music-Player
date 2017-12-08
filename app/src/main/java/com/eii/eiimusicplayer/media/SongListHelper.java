@@ -90,27 +90,60 @@ public class SongListHelper {
             trackNumber = Integer.parseInt(trackString);
         }
 
-        // TODO Add album cover. Didn't delete "fullPath" parameter, just in case we need it to retrieve cover
-        // TODO better "Unknown" management?
         return new Song(title, artistName, albumName, String.valueOf(trackNumber),
                 date, String.valueOf(duration), fullPath, uriArtwork);
     }
 
     private static void mapAlbumsAndArtists() {
+
         for (Song song : scannedSongs) {
+
             Album album = song.getAlbum();
             Artist artist = song.getArtist();
-
-            album.addSong(song);
-            artist.addAlbum(album);
+            album.setArtist(artist);
+            album.setUriArtwork(song.getUriArtwork());
 
             if (!scannedAlbums.contains(album)) {
+                album.addSong(song);
+
+                if (scannedArtists.contains(artist)) {
+                    artist = findArtist(artist.getName());
+                }
+
+                album.setArtist(artist);
+                artist.addAlbum(album);
+
+                if (!scannedArtists.contains(artist)) {
+                    scannedArtists.add(artist);
+                }
+
                 scannedAlbums.add(album);
-            }
-            if (!scannedArtists.contains(artist)) {
-                scannedArtists.add(artist);
+
+            } else {
+                Album albumAlreadySeen = findAlbum(album.getTitle());
+                if (albumAlreadySeen != null) {
+                    albumAlreadySeen.addSong(song);
+                }
             }
         }
+    }
+
+    private static Artist findArtist(String name) {
+        for (Artist a : getScannedArtists()) {
+            if (a.getName().equalsIgnoreCase(name)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+    private static Album findAlbum(String title) {
+        for (Album a : scannedAlbums) {
+            if (a.getTitle().equalsIgnoreCase(title)) {
+                return a;
+            }
+        }
+        return null;
     }
 
     public static List<Song> getScannedSongs() {

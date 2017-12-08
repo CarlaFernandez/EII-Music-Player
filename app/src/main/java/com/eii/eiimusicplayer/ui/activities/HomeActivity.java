@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
      */
     private ViewPager mViewPager;
     private BottomSheetFragment fragment;
+    public static boolean permissions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +61,8 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
         tabLayout.setupWithViewPager(mViewPager);
 
         ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
         fragment = new BottomSheetFragment();
@@ -75,12 +77,19 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
+            this.permissions = true;
             SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
+
         } else {
             Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage",
                     Toast.LENGTH_SHORT).show();
+            this.permissions = false;
         }
         return;
+    }
+
+    public static boolean hasPermissions() {
+        return permissions;
     }
 
     @Override

@@ -52,8 +52,6 @@ public class SongsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_songs, container, false);
 
-        // TODO load this in memory?? HashMap maybe?
-        // TODO order
         final List<Song> songs = SongListHelper.getScannedSongs();
         Collections.sort(
                 songs, new NameComparator<Song>()

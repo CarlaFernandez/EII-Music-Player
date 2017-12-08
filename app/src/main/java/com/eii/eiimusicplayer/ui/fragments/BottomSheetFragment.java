@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 
 public class BottomSheetFragment extends Fragment {
     public static final String TAG = "BOTTOM_SHEET_FRAGMENT";
+    private static final int THRESHOLD_TO_SEEK_NEXT = 2;
     private static MediaPlayerManager mp;
     private TextView songName;
     private TextView artistName;
@@ -120,7 +121,12 @@ public class BottomSheetFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    mp.seekTo(progress);
+                    if (seekBar.getMax() - progress < THRESHOLD_TO_SEEK_NEXT){
+                        playNext();
+                    }
+                    else{
+                        mp.seekTo(progress);
+                    }
                 }
             }
 

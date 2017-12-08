@@ -71,4 +71,12 @@ public class Album {
         return title + '\n' +
                 artist;
     }
+
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
+
+    public void setUriArtwork(Uri uriArtwork) {
+        this.uriArtwork = uriArtwork;
+    }
 }

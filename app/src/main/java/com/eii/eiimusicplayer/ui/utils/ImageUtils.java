@@ -6,9 +6,11 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.ui.activities.HomeActivity;
 
 import java.io.IOException;
 
@@ -26,7 +28,7 @@ public class ImageUtils {
             Bitmap cover = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
             view.setImageBitmap(cover);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        } catch (IOException|NullPointerException e) {
+        } catch (IOException | NullPointerException e) {
             view.setImageBitmap(placeholder);
             view.setScaleType(ImageView.ScaleType.CENTER_CROP);
             e.printStackTrace();
@@ -34,17 +36,21 @@ public class ImageUtils {
     }
 
     public static void setImageOrPlaceholderFit(Context context, ImageView view, Uri uri) {
-        Bitmap placeholder = BitmapFactory.decodeResource(context.getResources(),
-                R.drawable.album_artwork_placeholder_detail);
-
+        Bitmap placeholder = null;
         try {
-            Bitmap cover = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
-            view.setImageBitmap(cover);
-            view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        } catch (IOException|NullPointerException e) {
+            placeholder = BitmapFactory.decodeResource(context.getResources(),
+                    R.drawable.album_artwork_placeholder_detail);
+            if (HomeActivity.hasPermissions()) {
+                Bitmap cover = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+                view.setImageBitmap(cover);
+                view.setScaleType(ImageView.ScaleType.FIT_CENTER);
+            }
+            else throw new IOException();
+
+        } catch (IOException | NullPointerException e) {
             view.setImageBitmap(placeholder);
             view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-            e.printStackTrace();
+            Log.e("Imagen", "Imagen no encontrada");
         }
     }
 
