@@ -2,9 +2,11 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.eii.eiimusicplayer.R;
@@ -24,6 +26,8 @@ public class AlbumsFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private View rootView;
+    private List<Album> albums;
 
     public AlbumsFragment() {
     }
@@ -41,36 +45,50 @@ public class AlbumsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_albums, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_albums, container, false);
 
-        // TODO order
-        final List<Album> albums = SongListHelper.getScannedAlbums();
+        if (this.albums == null) {
+            this.albums = SongListHelper.getScannedAlbums();
+        }
+
         Collections.sort(
                 albums, new NameComparator<Album>()
         );
+
+        buildViewWithAlbums();
+
+        return rootView;
+    }
+
+    private void buildViewWithAlbums() {
         GridView gridView = (GridView) rootView.findViewById(R.id.grid_view_albums);
         AlbumArrayAdapter adapter = new AlbumArrayAdapter(getContext(), R.layout.album_grid_item, albums);
 
         gridView.setAdapter(adapter);
 
-        //TODO onclick
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                try {
-//                    Song song = songs.get(position);
-//                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(getContext(), songs, position);
-//                    MediaPlayerManager.getInstance().playSong(getContext(), song);
-//                } catch (Exception e) {
-//                    Log.e("ERROR", "Wrong songPlaying position");
-//                    Log.e("ERROR", e.getMessage());
-//                }
-//            }
-//        });
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    Album album = albums.get(position);
+                    SongsFragment newFragment = new SongsFragment();
+                    newFragment.setSongs(album.getSongs());
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(rootView.getId(), newFragment, "SONGS_FROM_ALBUM")
+                            .addToBackStack(null).commit();
 
-        return rootView;
+                } catch (Exception e) {
+
+                }
+            }
+        });
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+        Log.i("FRAGMENT", "Setting albums from artist");
     }
 }

@@ -1,6 +1,7 @@
 package com.eii.eiimusicplayer.media.pojo;
 
 import android.net.Uri;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 import java.util.List;

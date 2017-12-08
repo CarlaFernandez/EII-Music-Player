@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.media.SongsPlaying;
-import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Song;
 import com.eii.eiimusicplayer.ui.fragments.adapters.SongArrayAdapter;
 
@@ -31,8 +29,11 @@ public class SongsFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private List<Song> songs;
+    private View rootView;
 
     public SongsFragment() {
+
     }
 
     /**
@@ -50,12 +51,23 @@ public class SongsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_songs, container, false);
+        this.rootView = inflater.inflate(R.layout.fragment_songs, container, false);
 
-        final List<Song> songs = SongListHelper.getScannedSongs();
+        if (this.songs == null) {
+            this.songs = SongListHelper.getScannedSongs();
+        }
+
         Collections.sort(
                 songs, new NameComparator<Song>()
         );
+
+        buildViewWithSongs(rootView);
+
+        return rootView;
+
+    }
+
+    private void buildViewWithSongs(View rootView) {
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_songs);
         SongArrayAdapter adapter = new SongArrayAdapter(getContext(), R.layout.song_list_item, songs);
 
@@ -74,7 +86,10 @@ public class SongsFragment extends Fragment {
                 }
             }
         });
+    }
 
-        return rootView;
+    public void setSongs(List<Song> songs) {
+        this.songs = songs;
+        Log.i("FRAGMENT", "Settings songs from album");
     }
 }
