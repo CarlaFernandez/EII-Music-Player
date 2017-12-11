@@ -26,7 +26,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public SectionsPagerAdapter(FragmentManager fm, Context applicationContext) {
         super(fm);
         this.applicationContext = applicationContext;
-        tabNames = new ArrayList<String>();
+        tabNames = new ArrayList<>();
 
         tabNames.add(applicationContext.getString(R.string.tabArtists));
         tabNames.add(applicationContext.getString(R.string.tabAlbums));

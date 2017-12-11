@@ -26,6 +26,7 @@ public class ArtistFragment extends Fragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    private static int currentSectionNumber;
     private View rootView;
 
     public ArtistFragment() {
@@ -36,6 +37,7 @@ public class ArtistFragment extends Fragment {
      * number.
      */
     public static ArtistFragment newInstance(int sectionNumber) {
+        currentSectionNumber = sectionNumber;
         ArtistFragment fragment = new ArtistFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -62,7 +64,7 @@ public class ArtistFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Artist artist = artists.get(position);
-                    AlbumsFragment newFragment = new AlbumsFragment();
+                    AlbumsFragment newFragment = AlbumsFragment.newInstance(currentSectionNumber);
                     newFragment.setAlbums(artist.getAlbums());
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(rootView.getId(), newFragment, "ALBUMS_FROM_ARTIST")

@@ -6,7 +6,8 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context=".ui.fragments.SongsFragment">
+    tools:context=".ui.fragments.SongsFragment"
+    android:id="@+id/songs_fragment_relative">
 
     <ListView
         android:id="@+id/list_view_songs"

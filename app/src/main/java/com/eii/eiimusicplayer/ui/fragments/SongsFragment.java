@@ -55,11 +55,10 @@ public class SongsFragment extends Fragment {
 
         if (this.songs == null) {
             this.songs = SongListHelper.getScannedSongs();
+            Collections.sort(
+                    songs, new NameComparator<Song>()
+            );
         }
-
-        Collections.sort(
-                songs, new NameComparator<Song>()
-        );
 
         buildViewWithSongs(rootView);
 
@@ -91,5 +90,11 @@ public class SongsFragment extends Fragment {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
         Log.i("FRAGMENT", "Settings songs from album");
+    }
+
+    public void orderByTrackNumber() {
+        Collections.sort(
+                songs, new TrackNumComparator<Song>()
+        );
     }
 }

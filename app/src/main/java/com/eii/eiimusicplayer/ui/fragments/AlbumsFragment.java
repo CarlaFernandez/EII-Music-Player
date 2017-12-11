@@ -28,6 +28,7 @@ public class AlbumsFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private View rootView;
     private List<Album> albums;
+    private static int currentSectionNumber;
 
     public AlbumsFragment() {
     }
@@ -37,6 +38,7 @@ public class AlbumsFragment extends Fragment {
      * number.
      */
     public static AlbumsFragment newInstance(int sectionNumber) {
+        currentSectionNumber = sectionNumber;
         AlbumsFragment fragment = new AlbumsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -74,8 +76,9 @@ public class AlbumsFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Album album = albums.get(position);
-                    SongsFragment newFragment = new SongsFragment();
+                    SongsFragment newFragment = SongsFragment.newInstance(currentSectionNumber);
                     newFragment.setSongs(album.getSongs());
+                    newFragment.orderByTrackNumber();
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(rootView.getId(), newFragment, "SONGS_FROM_ALBUM")
                             .addToBackStack(null).commit();

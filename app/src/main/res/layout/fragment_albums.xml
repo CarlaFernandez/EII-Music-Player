@@ -19,7 +19,8 @@
         android:paddingLeft="0dp"
         android:paddingRight="0dp"
         android:paddingTop="0dp"
-        tools:context=".ui.fragments.AlbumsFragment" />
+        tools:context=".ui.fragments.AlbumsFragment"
+        android:background="@color/white"/>
 
 </RelativeLayout>
 
