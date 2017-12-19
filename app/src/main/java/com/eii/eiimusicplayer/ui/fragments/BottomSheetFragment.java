@@ -2,12 +2,12 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +52,7 @@ public class BottomSheetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_bottom_sheet, container, false);
 
         seekTimeHandler = new Handler();
@@ -72,6 +72,12 @@ public class BottomSheetFragment extends Fragment {
         seekBar = (SeekBar) v.findViewById(R.id.rep_bar);
 
         mp = MediaPlayerManager.getInstance();
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                MediaPlayerManager.getInstance().playNextSong(getContext());
+            }
+        });
 
         createOnClickListeners(v);
 
@@ -141,7 +147,7 @@ public class BottomSheetFragment extends Fragment {
         private static final long SEEK_UPDATE_TIME = 1000;
 
         public void run() {
-            int currentDuration = mp.getCurrrentPosition();
+            int currentDuration = mp.getCurrentPosition();
             @SuppressLint("DefaultLocale") String timeCurrent = String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(currentDuration),
                     TimeUnit.MILLISECONDS.toSeconds(currentDuration) -
@@ -236,20 +242,16 @@ public class BottomSheetFragment extends Fragment {
             mp.pause();
             setImagePlay();
         } else if (mp.hasSongSet()) {
-            mp.play();
+            mp.start();
             setImagePause();
         }
     }
 
     private void playNext() {
-        Log.i("SONG", "Next");
-        SongsPlaying.getInstance().playNextSong(getContext());
-        updateSongInfo();
+        MediaPlayerManager.getInstance().playNextSong(getContext());
     }
 
     private void playPrevious() {
-        Log.i("SONG", "Previous");
-        SongsPlaying.getInstance().playPreviousSong(getContext());
-        updateSongInfo();
+        MediaPlayerManager.getInstance().playPreviousSong(getContext());
     }
 }
