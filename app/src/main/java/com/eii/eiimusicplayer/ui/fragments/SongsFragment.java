@@ -13,6 +13,8 @@ import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.media.comparators.NameComparator;
+import com.eii.eiimusicplayer.media.comparators.TrackNumComparator;
 import com.eii.eiimusicplayer.media.pojo.Song;
 import com.eii.eiimusicplayer.ui.fragments.adapters.SongArrayAdapter;
 

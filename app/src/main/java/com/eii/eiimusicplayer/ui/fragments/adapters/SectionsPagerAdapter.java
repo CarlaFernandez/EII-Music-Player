@@ -21,10 +21,12 @@ import java.util.List;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
     private Context applicationContext;
     private List<String> tabNames;
+    private FragmentManager mFragmentManager;
 
 
     public SectionsPagerAdapter(FragmentManager fm, Context applicationContext) {
         super(fm);
+        this.mFragmentManager = fm;
         this.applicationContext = applicationContext;
         tabNames = new ArrayList<>();
 
@@ -39,13 +41,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return ArtistFragment.newInstance(position + 1);
+                return ArtistFragment.newInstance(position, "artist_artist");
             case 1:
-                return AlbumsFragment.newInstance(position + 1);
+                return AlbumsFragment.newInstance(position, "album_album");
             case 2:
-                return SongsFragment.newInstance(position + 1);
+                return SongsFragment.newInstance(position);
             default:
-                return OtherFragment.newInstance(position + 1);
+                return OtherFragment.newInstance(position);
 
         }
     }
@@ -59,4 +61,5 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return tabNames.get(position);
     }
+
 }

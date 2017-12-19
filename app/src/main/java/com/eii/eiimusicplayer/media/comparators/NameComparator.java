@@ -1,14 +1,14 @@
-package com.eii.eiimusicplayer.ui.fragments;
+package com.eii.eiimusicplayer.media.comparators;
 
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Artist;
 import com.eii.eiimusicplayer.media.pojo.Song;
 
 /**
- * Created by Carla on 02/11/2017.
+ * Name comparator for Artist, Song and Album titles
  */
 
-class NameComparator<T> implements java.util.Comparator<T> {
+public class NameComparator<T> implements java.util.Comparator<T> {
     @Override
     public int compare(T o1, T o2) {
         if (o1 instanceof Artist && o2 instanceof Artist) {

@@ -1,12 +1,12 @@
-package com.eii.eiimusicplayer.ui.fragments;
+package com.eii.eiimusicplayer.media.comparators;
 
 import com.eii.eiimusicplayer.media.pojo.Song;
 
 /**
- * Created by Carla on 11/12/2017.
+ * Comparator for the song track number
  */
 
-class TrackNumComparator<T> implements java.util.Comparator<T> {
+public class TrackNumComparator<T> implements java.util.Comparator<T> {
     @Override
     public int compare(T o1, T o2) {
         if (o1 instanceof Song && o2 instanceof Song) {

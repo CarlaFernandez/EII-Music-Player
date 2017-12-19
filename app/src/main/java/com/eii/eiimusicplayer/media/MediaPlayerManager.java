@@ -13,7 +13,7 @@ import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
 import java.io.IOException;
 
 /**
- * Created by Carla on 26/10/2017.
+ * Media Player wrapper
  */
 
 public class MediaPlayerManager {
@@ -35,7 +35,6 @@ public class MediaPlayerManager {
     private void setSong(Context context, Song song) {
         // Manage exception in UI
         try {
-            // TODO volver a empezar la reproduccion de una cancion si ya se está reproduciendo?
             mp.reset();
             mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mp.setDataSource(context, Uri.parse(song.getFullPath()));

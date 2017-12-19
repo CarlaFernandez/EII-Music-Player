@@ -8,7 +8,7 @@ import com.eii.eiimusicplayer.media.pojo.Song;
 import java.util.List;
 
 /**
- * Created by Carla on 26/10/2017.
+ * Class that holds the current playlist and song
  */
 
 public class SongsPlaying {
@@ -16,7 +16,6 @@ public class SongsPlaying {
 
     private List<Song> playlist;
     private int current;
-    private Context context;
 
     private SongsPlaying() {
 
@@ -30,7 +29,6 @@ public class SongsPlaying {
     }
 
     public void setCurrentPlaylistAndSong(Context context, List<Song> songs, int position) throws Exception {
-        this.context = context;
         this.playlist = songs;
         this.current = position;
 
@@ -52,12 +50,12 @@ public class SongsPlaying {
         checkCurrentPosition();
     }
 
-    public void playNextSong() {
-        if (playlist != null) {
-            if (current == playlist.size() - 1){
+    //TODO this should be placed in MediaPlayerManager
+    public void playNextSong(Context context) {
+        if (playlist != null && !playlist.isEmpty()) {
+            if (current == playlist.size() - 1) {
                 current = 0;
-            }
-            else{
+            } else {
                 current += 1;
             }
             Song next = playlist.get(current);
@@ -67,13 +65,12 @@ public class SongsPlaying {
         }
     }
 
-    public void playPreviousSong() {
+    public void playPreviousSong(Context context) {
         // TODO guardar ultima lista y puntero
-        if (playlist != null) {
-            if (current == 0){
+        if (playlist != null && playlist.size() > 1) {
+            if (current == 0) {
                 current = playlist.size() - 1;
-            }
-            else{
+            } else {
                 current -= 1;
             }
             Song previous = playlist.get(current);
@@ -82,8 +79,12 @@ public class SongsPlaying {
         }
     }
 
-    public Song getSongPlaying(){
+    public Song getSongPlaying() {
         //TODO exceptions??
-        return playlist.get(current);
+        if (playlist != null && !playlist.isEmpty()) {
+            return playlist.get(current);
+        } else {
+            return null;
+        }
     }
 }

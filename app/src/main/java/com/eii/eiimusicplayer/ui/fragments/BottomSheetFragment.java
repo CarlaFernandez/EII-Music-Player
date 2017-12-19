@@ -2,9 +2,6 @@ package com.eii.eiimusicplayer.ui.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -121,26 +118,27 @@ public class BottomSheetFragment extends Fragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
-                    if (seekBar.getMax() - progress < THRESHOLD_TO_SEEK_NEXT){
+                    if (seekBar.getMax() - progress < THRESHOLD_TO_SEEK_NEXT) {
                         playNext();
-                    }
-                    else{
+                    } else {
                         mp.seekTo(progress);
                     }
                 }
             }
 
             @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
+            public void onStartTrackingTouch(SeekBar seekBar) {
+            }
 
             @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
+            public void onStopTrackingTouch(SeekBar seekBar) {
+            }
         });
 
     }
 
     private Runnable mUpdateTimeTask = new Runnable() {
-        public static final long SEEK_UPDATE_TIME = 1000;
+        private static final long SEEK_UPDATE_TIME = 1000;
 
         public void run() {
             int currentDuration = mp.getCurrrentPosition();
@@ -155,8 +153,9 @@ public class BottomSheetFragment extends Fragment {
 
             seekTimeHandler.postDelayed(this, SEEK_UPDATE_TIME);
 
+            // TODO call onCompletion for MediaPlayerManager
             if (mp.isPlaying() &&
-                    currentDuration >= mp.getDuration() - SEEK_UPDATE_TIME ){
+                    currentDuration >= mp.getDuration() - SEEK_UPDATE_TIME) {
                 playNext();
             }
         }
@@ -206,17 +205,21 @@ public class BottomSheetFragment extends Fragment {
     }
 
     public void updateSongInfo() {
-        songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
-        artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
-        Uri uri = SongsPlaying.getInstance().getSongPlaying().getAlbum().getUriArtwork();
+        try {
+            songName.setText(SongsPlaying.getInstance().getSongPlaying().getTitle());
+            artistName.setText(SongsPlaying.getInstance().getSongPlaying().getArtist().getName());
+            Uri uri = SongsPlaying.getInstance().getSongPlaying().getAlbum().getUriArtwork();
 
-        seekBar.setMax(MediaPlayerManager.getInstance().getDuration());
-        seekBar.setProgress(0);
+            seekBar.setMax(MediaPlayerManager.getInstance().getDuration());
+            seekBar.setProgress(0);
 
-        ImageUtils.setImageOrPlaceholder(super.getContext(), image, uri);
+            ImageUtils.setImageOrPlaceholder(super.getContext(), image, uri);
 
-        if (mp.isPlaying()) {
-            setImagePause();
+            if (mp.isPlaying()) {
+                setImagePause();
+            }
+        } catch (Exception e) {
+
         }
     }
 
@@ -240,13 +243,13 @@ public class BottomSheetFragment extends Fragment {
 
     private void playNext() {
         Log.i("SONG", "Next");
-        SongsPlaying.getInstance().playNextSong();
+        SongsPlaying.getInstance().playNextSong(getContext());
         updateSongInfo();
     }
 
     private void playPrevious() {
         Log.i("SONG", "Previous");
-        SongsPlaying.getInstance().playPreviousSong();
+        SongsPlaying.getInstance().playPreviousSong(getContext());
         updateSongInfo();
     }
 }

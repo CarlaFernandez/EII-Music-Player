@@ -72,6 +72,12 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
     }
 
     @Override
+    protected void onStop() {
+        // TODO mediaPlayer.release();
+        super.onStop();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -85,7 +91,6 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
                     Toast.LENGTH_SHORT).show();
             this.permissions = false;
         }
-        return;
     }
 
     public static boolean hasPermissions() {
