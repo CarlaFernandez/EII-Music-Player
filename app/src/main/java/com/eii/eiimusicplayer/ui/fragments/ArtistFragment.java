@@ -13,6 +13,7 @@ import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.media.comparators.NameComparator;
 import com.eii.eiimusicplayer.media.pojo.Artist;
 import com.eii.eiimusicplayer.ui.fragments.adapters.ArtistArrayAdapter;
+import com.eii.eiimusicplayer.ui.fragments.adapters.SectionsPagerAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -76,7 +77,8 @@ public class ArtistFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     Artist artist = artists.get(position);
-                    AlbumsFragment newFragment = AlbumsFragment.newInstance(sectionNumber, "artist_album");
+                    AlbumsFragment newFragment = AlbumsFragment.newInstance(sectionNumber,
+                            SectionsPagerAdapter.ARTIST_ALBUM);
                     newFragment.setAlbums(artist.getAlbums());
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(rootView.getId(), newFragment, tag)

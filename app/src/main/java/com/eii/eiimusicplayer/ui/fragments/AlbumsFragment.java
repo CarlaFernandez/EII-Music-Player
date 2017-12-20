@@ -14,6 +14,7 @@ import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.media.comparators.NameComparator;
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.ui.fragments.adapters.AlbumArrayAdapter;
+import com.eii.eiimusicplayer.ui.fragments.adapters.SectionsPagerAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -84,7 +85,7 @@ public class AlbumsFragment extends Fragment {
                         throw new IllegalArgumentException("No-tag fragment");
                     }
 
-                    final int sectionNumber = tag.equalsIgnoreCase("artist_album") ? 0 : 1;
+                    final int sectionNumber = tag.equalsIgnoreCase(SectionsPagerAdapter.ARTIST_ALBUM) ? 0 : 1;
 
 
                     Album album = albums.get(position);

@@ -3,15 +3,15 @@ package com.eii.eiimusicplayer.media;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.widget.ImageView;
 
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Artist;
+import com.eii.eiimusicplayer.media.pojo.Playlist;
 import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.io.IOException;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Carla on 18/10/2017.
+ * Creates Song, Artist, Album and Playlist lists from the device's storage
  */
 
 public class SongListHelper {
@@ -27,10 +27,15 @@ public class SongListHelper {
     private static List<Song> currentSongList = new ArrayList<>();
     private static List<Album> scannedAlbums = new ArrayList<>();
     private static List<Artist> scannedArtists = new ArrayList<>();
+    private static List<Playlist> playlists = new ArrayList<>();
     ;
 
     // TODO exception management
-    public static void saveAllSongsFromExternalStorage(ContentResolver contentResolver) {
+    public static void saveAllSongsFromExternalStorage(ContentResolver contentResolver) throws IOException {
+        if (!isExternalStorageReadable()) {
+            throw new IOException("External storage is not readable");
+        }
+
         String[] allCols = {"*"};
         Uri allSongsURI = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
         String where = MediaStore.Audio.Media.IS_MUSIC + " != 0";
@@ -64,6 +69,24 @@ public class SongListHelper {
         }
         currentSongList.addAll(scannedSongs);
         mapAlbumsAndArtists();
+
+        scanPlaylists();
+    }
+
+    /* Checks if external storage is available to at least read */
+
+    private static boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    private static void scanPlaylists() {
+
     }
 
 
@@ -148,7 +171,6 @@ public class SongListHelper {
 
     public static List<Song> getScannedSongs() {
         Log.i("SONG", "returning " + scannedSongs.size() + " scannedSongs");
-        // TODO order
         return currentSongList;
     }
 
@@ -160,5 +182,9 @@ public class SongListHelper {
     public static List<Artist> getScannedArtists() {
         Log.i("ARTIST", "returning " + scannedArtists.size() + " scannedArtists");
         return scannedArtists;
+    }
+
+    public static List<Playlist> getScannedPlaylists() {
+        return playlists;
     }
 }

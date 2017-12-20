@@ -15,9 +15,12 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
+import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
 import com.eii.eiimusicplayer.ui.fragments.adapters.SectionsPagerAdapter;
+
+import java.io.IOException;
 
 public class HomeActivity extends AppCompatActivity implements BottomSheetFragment.OnFragmentInteractionListener {
     public static final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
@@ -72,9 +75,11 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
     }
 
     @Override
+
     protected void onStop() {
-        // TODO mediaPlayer.release();
         super.onStop();
+        MediaPlayerManager.getInstance().stop();
+        MediaPlayerManager.getInstance().release();
     }
 
     @Override
@@ -84,7 +89,12 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
 
             Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
             this.permissions = true;
-            SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
+            try {
+                SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
+            } catch (IOException e) {
+                Toast.makeText(HomeActivity.this, "Cannot read external storage",
+                        Toast.LENGTH_SHORT).show();
+            }
 
         } else {
             Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage",
