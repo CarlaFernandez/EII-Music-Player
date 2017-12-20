@@ -1,7 +1,11 @@
 package com.eii.eiimusicplayer.ui.fragments;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +52,14 @@ public class PlaylistFragment extends Fragment {
                              Bundle savedInstanceState) {
         this.rootView = inflater.inflate(R.layout.fragment_playlists, container, false);
 
+        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fabPlaylist);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createPlaylist();
+            }
+        });
+
         final List<Playlist> playlists = SongListHelper.getScannedPlaylists();
         Collections.sort(
                 playlists, new NameComparator<Playlist>()
@@ -56,6 +68,47 @@ public class PlaylistFragment extends Fragment {
         buildViewWithArtists(playlists);
 
         return rootView;
+    }
+
+    private void createPlaylist() {
+        // show dialog asking for name
+        // create empty playlist
+        // songs will be added through contextual menus in each song
+        // possibility to add long touch for multiple selection
+        // Use the Builder class for convenient dialog construction
+        AlertDialog dialog = createAlertDialog();
+        dialog.show();
+        return;
+
+    }
+
+    private AlertDialog createAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.dialog_playlist_title);
+
+        // Get the layout inflater
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+        builder.setView(inflater.inflate(R.layout.dialog_playlist, null));
+
+        builder.setMessage(R.string.dialog_playlist_msg)
+                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog, do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        Log.i("DIALOG", "Dialog about to be created");
+        // Create the AlertDialog object and return it
+        return builder.create();
     }
 
     private void buildViewWithArtists(final List<Playlist> playlists) {

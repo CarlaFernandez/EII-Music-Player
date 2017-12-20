@@ -12,4 +12,8 @@
     <string name="not_playing">Not currently playing</string>
     <string name="album">album</string>
     <string name="albums">albums</string>
+    <string name="dialog_playlist_msg">Playlist title:</string>
+    <string name="accept">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="dialog_playlist_title">New playlist</string>
 </resources>
