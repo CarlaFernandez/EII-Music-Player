@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.eii.eiimusicplayer.media.pojo.Album;
 import com.eii.eiimusicplayer.media.pojo.Artist;
-import com.eii.eiimusicplayer.media.pojo.Playlist;
 import com.eii.eiimusicplayer.media.pojo.Song;
 
 import java.io.IOException;
@@ -27,7 +26,6 @@ public class SongListHelper {
     private static List<Song> currentSongList = new ArrayList<>();
     private static List<Album> scannedAlbums = new ArrayList<>();
     private static List<Artist> scannedArtists = new ArrayList<>();
-    private static List<Playlist> playlists = new ArrayList<>();
     ;
 
     // TODO exception management
@@ -70,7 +68,6 @@ public class SongListHelper {
         currentSongList.addAll(scannedSongs);
         mapAlbumsAndArtists();
 
-        scanPlaylists();
     }
 
     /* Checks if external storage is available to at least read */
@@ -82,11 +79,6 @@ public class SongListHelper {
             return true;
         }
         return false;
-    }
-
-
-    private static void scanPlaylists() {
-
     }
 
 
@@ -182,9 +174,5 @@ public class SongListHelper {
     public static List<Artist> getScannedArtists() {
         Log.i("ARTIST", "returning " + scannedArtists.size() + " scannedArtists");
         return scannedArtists;
-    }
-
-    public static List<Playlist> getScannedPlaylists() {
-        return playlists;
     }
 }

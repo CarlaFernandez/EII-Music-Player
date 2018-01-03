@@ -134,4 +134,8 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
 }

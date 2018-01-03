@@ -9,7 +9,6 @@ import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.ui.fragments.AlbumsFragment;
 import com.eii.eiimusicplayer.ui.fragments.ArtistFragment;
 import com.eii.eiimusicplayer.ui.fragments.OtherFragment;
-import com.eii.eiimusicplayer.ui.fragments.PlaylistFragment;
 import com.eii.eiimusicplayer.ui.fragments.SongsFragment;
 
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public static final String ARTIST_ARTIST = "artist_artist";
     public static final String ARTIST_ALBUM = "artist_album";
     public static final String ALBUM_ALBUM = "album_album";
-    public static final String PLAYLIST_PLAYLIST = "playlist_playlist";
     private Context applicationContext;
     private List<String> tabNames;
     private FragmentManager mFragmentManager;
@@ -38,7 +36,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         tabNames.add(applicationContext.getString(R.string.tabArtists));
         tabNames.add(applicationContext.getString(R.string.tabAlbums));
         tabNames.add(applicationContext.getString(R.string.tabSongs));
-        tabNames.add(applicationContext.getString(R.string.tabPlaylists));
 
     }
 
@@ -51,8 +48,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
                 return AlbumsFragment.newInstance(position, ALBUM_ALBUM);
             case 2:
                 return SongsFragment.newInstance(position);
-            case 3:
-                return PlaylistFragment.newInstance(position, PLAYLIST_PLAYLIST);
             default:
                 return OtherFragment.newInstance(position);
 
