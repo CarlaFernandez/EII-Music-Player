@@ -26,7 +26,6 @@ public class SongListHelper {
     private static List<Song> currentSongList = new ArrayList<>();
     private static List<Album> scannedAlbums = new ArrayList<>();
     private static List<Artist> scannedArtists = new ArrayList<>();
-    ;
 
     // TODO exception management
     public static void saveAllSongsFromExternalStorage(ContentResolver contentResolver) throws IOException {

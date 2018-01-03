@@ -159,7 +159,6 @@ public class BottomSheetFragment extends Fragment {
 
             seekTimeHandler.postDelayed(this, SEEK_UPDATE_TIME);
 
-            // TODO call onCompletion for MediaPlayerManager
             if (mp.isPlaying() &&
                     currentDuration >= mp.getDuration() - SEEK_UPDATE_TIME) {
                 playNext();

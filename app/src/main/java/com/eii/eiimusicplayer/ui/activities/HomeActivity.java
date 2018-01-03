@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongListHelper;
 import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
 import com.eii.eiimusicplayer.ui.fragments.adapters.SectionsPagerAdapter;
@@ -74,12 +73,8 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
                 .commit();
     }
 
-    @Override
-
-    protected void onStop() {
-        super.onStop();
-        MediaPlayerManager.getInstance().stop();
-        MediaPlayerManager.getInstance().release();
+    public static boolean hasPermissions() {
+        return permissions;
     }
 
     @Override
@@ -88,23 +83,19 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
             Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
-            this.permissions = true;
             try {
                 SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
+                HomeActivity.permissions = true;
             } catch (IOException e) {
                 Toast.makeText(HomeActivity.this, "Cannot read external storage",
                         Toast.LENGTH_SHORT).show();
+                HomeActivity.permissions = false;
             }
 
         } else {
             Toast.makeText(HomeActivity.this, "Permission denied to read your External Storage",
                     Toast.LENGTH_SHORT).show();
-            this.permissions = false;
         }
-    }
-
-    public static boolean hasPermissions() {
-        return permissions;
     }
 
     @Override

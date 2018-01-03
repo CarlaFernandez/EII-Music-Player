@@ -24,16 +24,6 @@
             android:theme="@style/AppCompatTheme.AppBarOverlay"
             app:popupTheme="@style/AppCompatTheme.PopupOverlay">
 
-
-            <SearchView
-                android:id="@+id/searchBar"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:queryHint="@string/searchHint"
-                android:showAsAction="collapseActionView|ifRoom"
-                android:theme="@style/AppCompatTheme.SearchView" />
-
         </android.support.v7.widget.Toolbar>
 
 
