@@ -29,7 +29,7 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
      * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
+     * loaded bottomSheetFragment in memory. If this becomes too memory intensive, it
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private BottomSheetFragment fragment;
+    private BottomSheetFragment bottomSheetFragment;
     public static boolean permissions;
 
     @Override
@@ -50,7 +50,7 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Create the adapter that will return a fragment for each of the three
+        // Create the adapter that will return a bottomSheetFragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),
                 getApplicationContext());
@@ -67,9 +67,9 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
                 MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
 
-        fragment = new BottomSheetFragment();
+        bottomSheetFragment = new BottomSheetFragment();
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.bottomSheet_container, fragment, BottomSheetFragment.TAG)
+                .replace(R.id.bottomSheet_container, bottomSheetFragment, BottomSheetFragment.TAG)
                 .commit();
     }
 

@@ -1,13 +1,18 @@
 package com.eii.eiimusicplayer.ui.fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +24,7 @@ import android.widget.TextView;
 import com.eii.eiimusicplayer.R;
 import com.eii.eiimusicplayer.media.MediaPlayerManager;
 import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.ui.activities.HomeActivity;
 import com.eii.eiimusicplayer.ui.utils.ImageUtils;
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +32,7 @@ import java.util.concurrent.TimeUnit;
 public class BottomSheetFragment extends Fragment {
     public static final String TAG = "BOTTOM_SHEET_FRAGMENT";
     private static final int THRESHOLD_TO_SEEK_NEXT = 2;
+    private static final int NOTIFICATION_ID = 0;
     private static MediaPlayerManager mp;
     private TextView songName;
     private TextView artistName;
@@ -83,7 +90,49 @@ public class BottomSheetFragment extends Fragment {
 
         mUpdateTimeTask.run();
 
+        createNotification(getResources().getString(
+                R.string.notification_noSongPlaying), null);
+
         return v;
+    }
+
+//    private void updateNotification(String song, String artist) {
+//        NotificationCompat.Builder mBuilder =
+//                new NotificationCompat.Builder(getActivity())
+//                        .setContentTitle(song)
+//                        .setContentText(artist);
+//
+//        NotificationManager mNotificationManager =
+//                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//// mNotificationId is a unique integer your app uses to identify the
+//// notification. For example, to cancel the notification, you can pass its ID
+//// number to NotificationManager.cancel().
+//        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+//    }
+
+    private void createNotification(String song, String artist) {
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getActivity())
+                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setContentTitle(song)
+                        .setContentText(artist);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        Intent notificationIntent = new Intent(getActivity().getApplicationContext(), HomeActivity.class);
+
+        PendingIntent intent = PendingIntent.getActivity(getContext(), 0,
+                notificationIntent, 0);
+
+        Notification notification = mBuilder.build();
+        notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR;
+        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        mBuilder.setContentIntent(intent);
+
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     private void createOnClickListeners(View v) {
@@ -219,6 +268,8 @@ public class BottomSheetFragment extends Fragment {
             seekBar.setProgress(0);
 
             ImageUtils.setImageOrPlaceholder(super.getContext(), image, uri);
+
+            createNotification(songName.getText().toString(), artistName.getText().toString());
 
             if (mp.isPlaying()) {
                 setImagePause();
