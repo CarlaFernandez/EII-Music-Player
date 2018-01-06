@@ -200,10 +200,13 @@ public class BottomSheetFragment extends Fragment {
             @SuppressLint("DefaultLocale") String timeCurrent = String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(currentDuration),
                     TimeUnit.MILLISECONDS.toSeconds(currentDuration) -
-                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentDuration))
+                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentDuration))
             );
-            currentDurationTx.setText(timeCurrent);
-
+            if(mp.hasSongSet()) {
+                currentDurationTx.setText(timeCurrent);
+            }else{
+                currentDurationTx.setText("--:--");
+            }
             seekBar.setProgress(currentDuration);
 
             seekTimeHandler.postDelayed(this, SEEK_UPDATE_TIME);

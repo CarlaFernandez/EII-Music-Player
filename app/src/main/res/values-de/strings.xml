@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WiO</string>
+    <string name="accept">OK</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="album">album</string>
+    <string name="albums">alben</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="dialog_playlist_msg">Titel der Liste:</string>
+    <string name="dialog_playlist_title">Neue Liste</string>
+    <string name="not_playing">Kein Lied spielt</string>
+    <string name="notification_noSongPlaying">Kein Lied spielt</string>
+    <string name="searchHint">Titel, Künstler oder Album</string>
+    <string name="searchTitle">Finden</string>
+    <string name="tabAlbums">Alben</string>
+    <string name="tabArtists">Künstler</string>
+    <string name="tabPlaylists">Liste</string>
+    <string name="tabSongs">Lieder</string>
+</resources>
