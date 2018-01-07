@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.media;
+package com.eii.eiimusicplayer.media.player;
 
 import com.eii.eiimusicplayer.media.pojo.Song;
 
@@ -13,7 +13,6 @@ public class SongsPlaying {
 
     private List<Song> playlist;
     private int current;
-    private Song nextSong;
 
     private SongsPlaying() {
 
@@ -49,7 +48,7 @@ public class SongsPlaying {
         }
     }
 
-    Song getNextSong() {
+    public Song getNextSong() {
         if (playlist != null && !playlist.isEmpty()) {
             if (current == playlist.size() - 1) {
                 current = 0;
@@ -63,7 +62,7 @@ public class SongsPlaying {
 
     }
 
-    Song getPreviousSong() {
+    public Song getPreviousSong() {
         if (playlist != null && playlist.size() > 1) {
             if (current == 0) {
                 current = playlist.size() - 1;
@@ -74,5 +73,18 @@ public class SongsPlaying {
         }
 
         return null;
+    }
+
+    public int getSize() {
+        if (playlist == null) return 0;
+        else return playlist.size();
+    }
+
+    public Song getSong(int listPosition) {
+        return playlist.get(listPosition);
+    }
+
+    public void setCurrentSong(int currentSong) {
+        this.current = currentSong;
     }
 }

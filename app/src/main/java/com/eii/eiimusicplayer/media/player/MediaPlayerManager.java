@@ -1,4 +1,4 @@
-package com.eii.eiimusicplayer.media;
+package com.eii.eiimusicplayer.media.player;
 
 import android.content.Context;
 import android.media.AudioManager;
@@ -7,6 +7,10 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.eii.eiimusicplayer.media.player.playmodes.LoopPlayMode;
+import com.eii.eiimusicplayer.media.player.playmodes.PlayMode;
+import com.eii.eiimusicplayer.media.player.playmodes.ShufflePlayMode;
+import com.eii.eiimusicplayer.media.player.playmodes.StandardPlayMode;
 import com.eii.eiimusicplayer.media.pojo.Song;
 import com.eii.eiimusicplayer.ui.fragments.BottomSheetFragment;
 
@@ -19,9 +23,11 @@ import java.io.IOException;
 public class MediaPlayerManager extends MediaPlayer {
     private static MediaPlayerManager manager;
     private boolean songSet;
+    private PlayMode playMode;
+    private boolean shuffle;
 
     private MediaPlayerManager() {
-
+        this.playMode = new StandardPlayMode();
     }
 
     public static MediaPlayerManager getInstance() {
@@ -64,12 +70,12 @@ public class MediaPlayerManager extends MediaPlayer {
     }
 
     public void playNextSong(Context context) {
-        Song next = SongsPlaying.getInstance().getNextSong();
+        Song next = this.playMode.getNextSong();
         playSong(context, next);
     }
 
     public void playPreviousSong(Context context) {
-        Song previous = SongsPlaying.getInstance().getPreviousSong();
+        Song previous = this.playMode.getPreviousSong();
         playSong(context, previous);
     }
 
@@ -77,4 +83,21 @@ public class MediaPlayerManager extends MediaPlayer {
         return songSet;
     }
 
+    @Override
+    public boolean isLooping() {
+        return playMode instanceof LoopPlayMode;
+    }
+
+    @Override
+    public void setLooping(boolean looping) {
+        this.playMode = looping ? new LoopPlayMode() : new StandardPlayMode();
+    }
+
+    public boolean isShuffle() {
+        return playMode instanceof ShufflePlayMode;
+    }
+
+    public void setShuffle(boolean shuffle) {
+        this.playMode = shuffle ? new ShufflePlayMode() : new StandardPlayMode();
+    }
 }

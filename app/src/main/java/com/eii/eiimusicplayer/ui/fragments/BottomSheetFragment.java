@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,8 +23,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.eii.eiimusicplayer.R;
-import com.eii.eiimusicplayer.media.MediaPlayerManager;
-import com.eii.eiimusicplayer.media.SongsPlaying;
+import com.eii.eiimusicplayer.media.player.MediaPlayerManager;
+import com.eii.eiimusicplayer.media.player.SongsPlaying;
 import com.eii.eiimusicplayer.ui.activities.HomeActivity;
 import com.eii.eiimusicplayer.ui.utils.ImageUtils;
 
@@ -39,6 +40,7 @@ public class BottomSheetFragment extends Fragment {
     private TextView currentDurationTx;
     private ImageButton playPause;
     private ImageButton loopButton;
+    private ImageButton randomButton;
     private ImageView image;
     private SeekBar seekBar;
     private Handler seekTimeHandler;
@@ -46,6 +48,7 @@ public class BottomSheetFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private BottomSheetBehavior<View> bottomSheetBehavior;
+
 
     public BottomSheetFragment() {
         // Required empty public constructor
@@ -69,6 +72,7 @@ public class BottomSheetFragment extends Fragment {
         currentDurationTx = (TextView) v.findViewById(R.id.duration_current);
         playPause = (ImageButton) v.findViewById(R.id.play_pause_button);
         loopButton = (ImageButton) v.findViewById(R.id.repeat_button);
+        randomButton = (ImageButton) v.findViewById(R.id.random_button);
 
         image = (ImageView) v.findViewById(R.id.imageView);
         ImageUtils.setImageOrPlaceholder(super.getContext(), image, null);
@@ -95,21 +99,6 @@ public class BottomSheetFragment extends Fragment {
 
         return v;
     }
-
-//    private void updateNotification(String song, String artist) {
-//        NotificationCompat.Builder mBuilder =
-//                new NotificationCompat.Builder(getActivity())
-//                        .setContentTitle(song)
-//                        .setContentText(artist);
-//
-//        NotificationManager mNotificationManager =
-//                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//// mNotificationId is a unique integer your app uses to identify the
-//// notification. For example, to cancel the notification, you can pass its ID
-//// number to NotificationManager.cancel().
-//        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-//    }
 
     private void createNotification(String song, String artist) {
         NotificationCompat.Builder mBuilder =
@@ -164,6 +153,50 @@ public class BottomSheetFragment extends Fragment {
             }
         });
 
+
+        v.findViewById(R.id.repeat_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // only allow one of the states at a time
+                if (MediaPlayerManager.getInstance().isShuffle()) {
+                    Drawable undoShuffle =
+                            getResources().getDrawable(R.drawable.ic_shuffle_white_24px);
+                    randomButton.setImageDrawable(undoShuffle);
+                }
+
+                boolean loopMode = MediaPlayerManager.getInstance().isLooping();
+
+                Drawable newDrawable = loopMode ?
+                        getResources().getDrawable(R.drawable.ic_repeat_white_24px) :
+                        getResources().getDrawable(R.drawable.ic_repeat_pressed_24px);
+
+                loopButton.setImageDrawable(newDrawable);
+                MediaPlayerManager.getInstance().setLooping(!loopMode);
+
+            }
+        });
+
+        v.findViewById(R.id.random_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // only allow one of the states at a time
+                if (MediaPlayerManager.getInstance().isLooping()) {
+                    Drawable undoLooping =
+                            getResources().getDrawable(R.drawable.ic_repeat_white_24px);
+                    loopButton.setImageDrawable(undoLooping);
+                }
+
+                boolean shuffleMode = MediaPlayerManager.getInstance().isShuffle();
+
+                Drawable newDrawable = shuffleMode ?
+                        getResources().getDrawable(R.drawable.ic_shuffle_white_24px) :
+                        getResources().getDrawable(R.drawable.ic_shuffle_pressed_24px);
+
+                randomButton.setImageDrawable(newDrawable);
+                MediaPlayerManager.getInstance().setShuffle(!shuffleMode);
+            }
+        });
+
         createSeekBarListeners();
 
     }
@@ -200,11 +233,11 @@ public class BottomSheetFragment extends Fragment {
             @SuppressLint("DefaultLocale") String timeCurrent = String.format("%02d:%02d",
                     TimeUnit.MILLISECONDS.toMinutes(currentDuration),
                     TimeUnit.MILLISECONDS.toSeconds(currentDuration) -
-                    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentDuration))
+                            TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(currentDuration))
             );
-            if(mp.hasSongSet()) {
+            if (mp.hasSongSet()) {
                 currentDurationTx.setText(timeCurrent);
-            }else{
+            } else {
                 currentDurationTx.setText("--:--");
             }
             seekBar.setProgress(currentDuration);

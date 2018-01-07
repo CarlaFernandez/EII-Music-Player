@@ -109,7 +109,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/repeat_button"
+                    android:id="@+id/random_button"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:background="@null"
@@ -132,7 +132,7 @@
                     android:layout_weight="2" />
 
                 <ImageButton
-                    android:id="@+id/random_button"
+                    android:id="@+id/repeat_button"
                     android:layout_width="50dp"
                     android:layout_height="match_parent"
                     android:background="@null"
