@@ -87,4 +87,5 @@ public class SongsPlaying {
     public void setCurrentSong(int currentSong) {
         this.current = currentSong;
     }
+
 }

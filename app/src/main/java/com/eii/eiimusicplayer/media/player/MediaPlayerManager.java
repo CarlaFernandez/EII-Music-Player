@@ -50,7 +50,7 @@ public class MediaPlayerManager extends MediaPlayer {
         }
     }
 
-    private void playSong(Context context, Song song) {
+    public void playSong(Context context, Song song) {
         if (song == null || context == null) {
             // TODO exceptionnnn
             return;
@@ -99,5 +99,9 @@ public class MediaPlayerManager extends MediaPlayer {
 
     public void setShuffle(boolean shuffle) {
         this.playMode = shuffle ? new ShufflePlayMode() : new StandardPlayMode();
+    }
+
+    public void playSong(Context context, int position) {
+        playSong(context, SongsPlaying.getInstance().getSong(position));
     }
 }

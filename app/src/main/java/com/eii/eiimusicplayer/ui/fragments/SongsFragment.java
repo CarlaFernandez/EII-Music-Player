@@ -78,9 +78,8 @@ public class SongsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-//                    Song song = songs.get(position);
-                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(songs, position - 1);
-                    MediaPlayerManager.getInstance().playNextSong(getContext());
+                    SongsPlaying.getInstance().setCurrentPlaylistAndSong(songs, position);
+                    MediaPlayerManager.getInstance().playSong(getContext(), position);
                 } catch (Exception e) {
                     Log.e("ERROR", "Wrong songPlaying position");
                     Log.e("ERROR", e.getMessage());

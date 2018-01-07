@@ -78,9 +78,8 @@ public class HomeActivity extends AppCompatActivity implements BottomSheetFragme
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-            Toast.makeText(HomeActivity.this, "Permission OK", Toast.LENGTH_SHORT).show();
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             try {
                 SongListHelper.saveAllSongsFromExternalStorage(getContentResolver());
                 HomeActivity.permissions = true;
