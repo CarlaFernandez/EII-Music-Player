@@ -30,8 +30,4 @@ public class ShufflePlayMode implements PlayMode {
 
     }
 
-    @Override
-    public Song getPreviousSong() {
-        return getNextSong();
-    }
 }

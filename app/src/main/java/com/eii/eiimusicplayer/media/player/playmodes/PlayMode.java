@@ -8,6 +8,4 @@ import com.eii.eiimusicplayer.media.pojo.Song;
 
 public interface PlayMode {
     Song getNextSong();
-
-    Song getPreviousSong();
 }

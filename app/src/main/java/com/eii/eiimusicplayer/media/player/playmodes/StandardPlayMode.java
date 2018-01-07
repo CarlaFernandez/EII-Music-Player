@@ -12,9 +12,4 @@ public class StandardPlayMode implements PlayMode {
     public Song getNextSong() {
         return SongsPlaying.getInstance().getNextSong();
     }
-
-    @Override
-    public Song getPreviousSong() {
-        return SongsPlaying.getInstance().getPreviousSong();
-    }
 }

@@ -75,7 +75,7 @@ public class MediaPlayerManager extends MediaPlayer {
     }
 
     public void playPreviousSong(Context context) {
-        Song previous = this.playMode.getPreviousSong();
+        Song previous = SongsPlaying.getInstance().getPreviousSong();
         playSong(context, previous);
     }
 

@@ -13,8 +13,4 @@ public class LoopPlayMode implements PlayMode {
         return SongsPlaying.getInstance().getSongPlaying();
     }
 
-    @Override
-    public Song getPreviousSong() {
-        return SongsPlaying.getInstance().getSongPlaying();
-    }
 }

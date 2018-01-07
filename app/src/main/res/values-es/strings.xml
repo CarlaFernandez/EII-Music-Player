@@ -8,11 +8,11 @@
     <string name="cancel">Cancelar</string>
     <string name="dialog_playlist_msg">Título de lista:</string>
     <string name="dialog_playlist_title">Nueva lista</string>
-    <string name="not_playing">Ninguna canción sonando</string>
-    <string name="notification_noSongPlaying">Ninguna canción sonando</string>
+    <string name="not_playing">Ninguna canción</string>
+    <string name="notification_noSongPlaying">Ninguna canción</string>
     <string name="searchHint">Título, artista o álbum</string>
     <string name="searchTitle">Buscar</string>
-    <string name="tabAlbums">Álbums</string>
+    <string name="tabAlbums">Álbumes</string>
     <string name="tabArtists">Artistas</string>
     <string name="tabPlaylists">Listas</string>
     <string name="tabSongs">Canciones</string>
