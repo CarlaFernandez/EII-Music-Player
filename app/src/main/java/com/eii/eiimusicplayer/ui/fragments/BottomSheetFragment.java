@@ -103,7 +103,7 @@ public class BottomSheetFragment extends Fragment {
     private void createNotification(String song, String artist) {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(getActivity())
-                        .setSmallIcon(R.mipmap.ic_launcher_round)
+                        .setSmallIcon(R.mipmap.ic_launcher)
                         .setContentTitle(song)
                         .setContentText(artist);
 
