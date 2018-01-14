@@ -10,12 +10,11 @@ import java.util.Random;
  */
 
 public class ShufflePlayMode implements PlayMode {
-    private Random random = new Random();
-    private SongsPlaying songsPlaying;
 
     @Override
     public Song getNextSong() {
-        songsPlaying = SongsPlaying.getInstance();
+        Random random = new Random();
+        SongsPlaying songsPlaying = SongsPlaying.getInstance();
 
         int listSize = songsPlaying.getSize();
 

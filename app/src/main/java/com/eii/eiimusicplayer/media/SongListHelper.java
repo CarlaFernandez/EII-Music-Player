@@ -23,7 +23,6 @@ import java.util.List;
 
 public class SongListHelper {
     private static List<Song> scannedSongs = new ArrayList<>();
-    private static List<Song> currentSongList = new ArrayList<>();
     private static List<Album> scannedAlbums = new ArrayList<>();
     private static List<Artist> scannedArtists = new ArrayList<>();
 
@@ -64,7 +63,6 @@ public class SongListHelper {
                 cursor.close();
             }
         }
-        currentSongList.addAll(scannedSongs);
         mapAlbumsAndArtists();
 
     }
@@ -162,7 +160,7 @@ public class SongListHelper {
 
     public static List<Song> getScannedSongs() {
         Log.i("SONG", "returning " + scannedSongs.size() + " scannedSongs");
-        return currentSongList;
+        return scannedSongs;
     }
 
     public static List<Album> getScannedAlbums() {

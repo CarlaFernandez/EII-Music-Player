@@ -24,7 +24,6 @@ public class MediaPlayerManager extends MediaPlayer {
     private static MediaPlayerManager manager;
     private boolean songSet;
     private PlayMode playMode;
-    private boolean shuffle;
 
     private MediaPlayerManager() {
         this.playMode = new StandardPlayMode();
@@ -50,7 +49,7 @@ public class MediaPlayerManager extends MediaPlayer {
         }
     }
 
-    public void playSong(Context context, Song song) {
+    private void playSong(Context context, Song song) {
         if (song == null || context == null) {
             // TODO exceptionnnn
             return;
